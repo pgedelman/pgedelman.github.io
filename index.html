@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paul Edelman - Personal Website</title>
+  <style>
+    body {
+        height: 100%;
+        margin: 0;
+        font-family: monospace;
+        color: white;
+    }
+
+    .container {
+        display: flex;
+        height: 100vh;
+    }
+
+    .left-div,
+    .right-div {
+        flex: 1;
+        padding: 20px;
+        box-sizing: border-box;
+        overflow: auto;
+    }
+
+    .left-div {
+        background-color: orange;
+        font-size: 10vh;
+    }
+
+    .right-div {
+        background-color: black;
+    }
+
+    .scrollable-content {
+        padding: 20px;
+        box-sizing: border-box;
+        background-color: grey;
+    }
+    .about {
+        font-size: 5vw;
+        text-align: center;
+    }
+    h2.about {
+        font-size: 1.4vw;
+        text-align: left;
+        padding: 20px;
+    }
+    p.about {
+        font-size: 1.4vw;
+        text-align: left;
+        padding: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="left-div">
+      <!-- Content for the left div goes here -->
+      <h1 style="padding: 30px">Paul Edelman</h1>
+    </div>
+
+    <div class="right-div">
+      <!-- Content for the right div goes here -->
+        <div class="about">About</div>
+        <h2 class="about">
+        I'm a student at the University of Delaware,
+        pursuing a degree in Computer Science and Applied Math.
+        YAP YAP YAP YAP YAP YAP YAP YAP YAP YAP YAP YAP YAP
+        YAP YAP YAP YAP YAP YAP YAP YAP YAP YAP YAP YAP
+        </h2>
+        <p class="about" style="text-align: center;">Projects <br>|<br>|<br>\/</p>
+    </div>
+  </div>
+
+  <div class="scrollable-content">
+    <!-- Content that requires scrolling goes here -->
+    <h2>Projects</h2>
+    <p>This is the content that requires scrolling. Add more content as needed to make the page scrollable.</p>
+  </div>
+
+</body>
+</html>
