@@ -1,48 +1,105 @@
 body {
-    height: 100%;
-    margin: 0;
-    font-family: monospace;
-    color: white;
-}
-
-.container {
-    display: flex;
+    margin: 3rem;
+    margin-bottom: 0;
+    font-family: Arial, sans-serif;
+    background-color: #333;
     height: 100vh;
 }
 
-.left-div,
-.right-div {
+.content {
+    display: none;
+    position: fixed;
+    top: 3rem;
+    left: 7rem;
+    bottom: 11rem;
+    width: calc(100% - 7rem - 3rem);
+    background-color: beige;
+    border-radius: 1rem;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+.colorBar {
+    position: fixed;
+}
+
+.bigHorizontal {
+    height: 3rem;
+    bottom: 7rem;
+    width: calc(100% - 6rem);   
+    border-top-right-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+}
+
+.smallHorizontal {
+    height: 1rem;
+    bottom: 6rem;
+    width: calc((100% - 6rem - 2rem) / 3);
+}
+
+#smallHorizontal1 {
+    left: 3rem;
+}
+
+#smallHorizontal2 {
+    left: calc((100% - 6rem - 2rem) / 3 + 4rem);
+}
+
+#smallHorizontal3 {
+    left: calc((100% - 6rem - 2rem) / 3 * 2 + 5rem);
+}
+
+.barVertical {
+    height: calc(100% - 10rem - 3rem);
+    bottom: 10rem;
+    width: 3rem;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+}
+
+.tabs {
+    position: fixed;
+    bottom: 0;
+    width: calc(100% - 6rem);
+    background-color: #333;
+    display: flex;
+    height: 6rem;   
+}
+
+.tab {  
     flex: 1;
-    padding: 20px;
-    box-sizing: border-box;
-    overflow: auto;
-}
-
-.left-div {
-    background-color: orange;
-    font-size: 10vh;
-}
-
-.right-div {
-    background-color: black;
-}
-
-.scrollable-content {
-    padding: 20px;
-    box-sizing: border-box;
-    background-color: grey;
-}
-.about {
-    font-size: 5vw;
     text-align: center;
+    padding: 2rem;
+    color: beige;
+    cursor: pointer;
+    margin-left: .5rem;
+    margin-right: .5rem;
+    font-size: 2em;
+    overflow: hidden;
+    font-weight: bold;
 }
-h2.about {
-    font-size: 1.4vw;
-    text-align: left;
-    padding: 20px;
+
+/*#section1 {
 }
-p.about {
-    font-size: 1.4vw;
-    text-align: left;
-    padding: 20px;
+
+#section2 {
+    background-color: #22AFD3; 
+}
+
+#section3 {
+    background-color: #C42C2C; 
+}*/
+
+#section1tab {
+    background-color: #F07605; /* Blue */
+    margin-left: 0rem;
+}
+
+#section2tab {
+    background-color: #22AFD3; /* Green */
+}
+
+#section3tab {
+    background-color: #C42C2C; /* Red */
+    margin-right: 0rem;
 }

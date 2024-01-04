@@ -3,35 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Paul Edelman - Personal Website</title>
   <link rel="stylesheet" href="style.css">
+  <title>Paul Edelman</title>
 </head>
 <body>
 
-  <div class="container">
-    <div class="left-div">
-      <!-- Content for the left div goes here -->
-      <h1 style="padding: 30px">Paul Edelman</h1>
-    </div>
-
-    <div class="right-div">
-      <!-- Content for the right div goes here -->
-        <div class="about">About</div>
-        <h2 class="about">
-        I'm a student at the University of Delaware,
-        pursuing a degree in Computer Science and Applied Math.
-        YAP YAP YAP YAP YAP YAP YAP YAP YAP YAP YAP YAP YAP
-        YAP YAP YAP YAP YAP YAP YAP YAP YAP YAP YAP YAP
-        </h2>
-        <p class="about" style="text-align: center;">Projects <br>|<br>|<br>\/</p>
-    </div>
+  <div class="content" id="section1">
+    <!-- Content for Section 1 -->
+    <h1>Projects</h1>
+    <p>This is the content for section 1.</p>
   </div>
 
-  <div class="scrollable-content">
-    <!-- Content that requires scrolling goes here -->
-    <h2>Projects</h2>
-    <p>This is the content that requires scrolling. Add more content as needed to make the page scrollable.</p>
+  <div class="content" id="section2">
+    <!-- Content for Section 2 -->
+    <h1>About</h1>
+    <p>This is the content for section 2.</p>
   </div>
 
+  <div class="content" id="section3">
+    <!-- Content for Section 3 -->
+    <h1>Contact</h1>
+    <p>This is the content for section 3.</p>
+  </div>
+  <div class="colorBar bigHorizontal"></div>
+  <div class="colorBar barVertical"></div>
+  <div class="colorBar smallHorizontal" id="smallHorizontal1"></div>
+  <div class="colorBar smallHorizontal" id="smallHorizontal2"></div>
+  <div class="colorBar smallHorizontal" id="smallHorizontal3"></div>
+  <div class="tabs">
+    <div class="tab" id="section1tab" onclick="changeSection(1)" onmouseover="changeSection(1)" onmouseout="unhoverTab(1)">Projects</div>
+    <div class="tab" id="section2tab" onclick="changeSection(2)" onmouseover="changeSection(2)" onmouseout="unhoverTab(2)">About</div>
+    <div class="tab" id="section3tab" onclick="changeSection(3)" onmouseover="changeSection(3)" onmouseout="unhoverTab(3)">Contact</div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
