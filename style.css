@@ -22,7 +22,9 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
     position: relative;
+    overflow: hidden;
 }
 .landing-item {
     margin: 2%;
@@ -31,13 +33,26 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
     width: 33%;
     padding: 10px;
     height: 100%;
     box-sizing: border-box;
     overflow: hidden;
     margin: 2%;
+}
+#contact-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 4%;
+    padding: 3%;
+    background-color: rgb(53, 176, 115);
+    border-radius: .6rem;
+    box-shadow: inset 0px 0px 2px 1px rgba(51, 51, 51, .3);
+}
+.contact {
+    margin: 3%;
 }
 #name-bar {
     font-weight: normal;
@@ -71,6 +86,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: transform 0.3s;
+    overflow: hidden;
 }
 .links svg {
     width: 3rem;
@@ -79,15 +96,13 @@ body {
 #profile-pic {
     width: 100%;
     height: auto;
-    border: 2px solid rgb(248, 249, 249);
     border-radius: 10%;
+    
 }
 #divider {
     width: 2px;
     background-color: rgb(248, 249, 249);
     height: 60%;
-    margin: 2%;
-    margin-left: 0;
 }
 #main-landing-container {
     display: flex;
@@ -100,39 +115,31 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
 }
 #about-container {
     width: 65%;
+    height: 80%;
     margin-left: 3%;
     margin-right: 2%;
+    padding: 2%;
+    border-radius: .6rem;
+    background-color: rgb(53, 176, 115);
+    box-shadow: inset 0px 0px 2px 1px rgba(51, 51, 51, .3);
 }
 #link-container {
     display: flex;
     align-items: center;
     gap: 1rem;
 }
-.linkedin-button {
+#linkedin-button {
     fill: #0A66C2;
-    transition: transform 0.3s;
 }
-.github-button {
-    height: 4rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#github-button {
     fill: #181717;
-    transition: transform 0.3s;
-    overflow: hidden;
 }
-.gmail-button {
-    width: 4rem;
-    height: 4rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#gmail-button {
     fill: #EA4335;
-    transition: transform 0.3s;
-    overflow: hidden;
 }
 .bar {
     margin: 3%;
@@ -141,12 +148,6 @@ body {
     border-radius: 1rem;
     background-color: rgb(248, 249, 249);
 }
-.content {
-    margin-left: 2%;
-    margin-top: 1%;
-    margin-bottom: 2%;
-    height: 92%;
-    width: 96%;
-    border-radius: 1rem;
-    background-color: #333;
+.outer-shadow {
+    box-shadow: 0px 0px 2px 1px rgba(51, 51, 51, .3);
 }
