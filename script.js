@@ -1,12 +1,22 @@
-const navLinks = document.getElementsByClassName('nav-link');
-for (let link of navLinks) {
-    link.addEventListener('mouseover', () => {
-        link.classList.add('nav-link-hover');
+const colorHover = document.getElementsByClassName('color-hover');
+for (let element of colorHover) {
+    element.addEventListener('mouseover', () => {
+        element.classList.add('color-hovered');
     }); 
-    link.addEventListener('mouseout', () => {
-        link.classList.remove('nav-link-hover');
+    element.addEventListener('mouseout', () => {
+        element.classList.remove('color-hovered');
     });
 }
+const outlineHover = document.getElementsByClassName('outline-hover');
+for (let element of outlineHover) {
+    element.addEventListener('mouseover', () => {
+        element.classList.add('outline-hovered');
+    }); 
+    element.addEventListener('mouseout', () => {
+        element.classList.remove('outline-hovered');
+    });
+}
+
 const skillNames = ['cpp', 'python', 'html', 'javascript','typescript'];
 const skillExplanation = document.getElementById('skill-explanation');
 const skillHeader = document.getElementById('skill-header');
@@ -55,14 +65,9 @@ const explanationHeader = {
     'html': 'HTML',
     'javascript': 'Javascript',
     'typescript': 'Typescript',
-};
-
-const linkButtons = document.getElementsByClassName('link');
-for (let link of linkButtons) {
-    link.addEventListener('mouseover', () => {
-        link.classList.add('link-button-hover');
-    }); 
-    link.addEventListener('mouseout', () => {
-        link.classList.remove('link-button-hover');
-    });
 }
+
+const headingPanel = document.getElementsByClassName('heading-panel')[0];
+const twoPercent = window.getComputedStyle(headingPanel).marginRight;
+console.log(twoPercent);
+const spacerHeight = document.getElementById('asdf').style.height = twoPercent + 'px';
