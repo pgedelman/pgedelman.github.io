@@ -1,0 +1,60 @@
+#projects {
+    background-color: var(--secondary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+}
+
+#projects .projects-container {
+    width: 85%;
+    height: 65vh;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 1rem;
+}
+#projects .project {
+    display: flex;
+    background-color: rgb(209, 232, 252);
+    border-radius: .6rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    flex-direction: column;
+    padding: .6rem;
+    color: black;
+}
+#projects .project:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+#projects .top-container {
+    display: flex;
+    flex-direction: rows;
+    padding-bottom: .4rem;
+    gap: 1rem;
+}
+#projects .top-container h3 {
+    width: 50%;
+    text-align: center;
+}   
+#projects a {
+    display: flex;
+    text-align: center;
+    background-color: var(--primary);
+    border: none;
+    color: rgb(209, 232, 252);
+    cursor: pointer;
+    font-size: .8rem;
+    justify-content: center;
+    align-items: center;
+    padding: .4rem 1rem;
+    text-decoration: none;
+}
+#projects a:hover {
+    background-color: #0d518c;
+}
+#projects .project p {
+    font-size: 1rem;
+}

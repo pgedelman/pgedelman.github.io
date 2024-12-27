@@ -1,0 +1,141 @@
+:root {
+    --primary: #035AA6    ;
+    --secondary: #E2B13D   ;
+    --tertiary: #519872      ;  
+    --quaternary: #7E3F8F   ;
+  }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Lato', sans-serif;
+    background-color: #F3F4F6;
+}
+
+h1 {
+    margin: 0;
+    padding: 0 1rem;
+    font-size: 5.5rem;
+}
+h2 {
+    width: 100%;
+    font-size: 3rem;
+    align-items: center;
+    justify-content: center;
+}
+.page .heading {
+    text-align: center;
+    margin: 2%;
+}
+h3 {
+    width: 100%;
+    font-size: 1.5rem;
+    justify-content: center;
+}
+
+#nav-bar {
+    position: absolute;
+    top: 1rem;
+    left: 50%;
+    height: 4rem;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    justify-content: space-around;
+    background-color: none;
+    gap:none;
+}
+#nav-bar .nav-button:hover {
+    transform: scale(110%);
+    transition: transform 0.3s ease;    
+}
+#nav-bar button {
+    padding: 0.5rem 1.5rem;
+    color: #333;
+    background-color: rgb(209, 232, 252);
+    border:none;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+#nav-bar button:hover {
+    color:rgb(209, 232, 252);    
+}
+#nav-1 {
+    border-radius: 1rem 0 0 1rem;
+}
+#nav-4 {
+    border-radius: 0 1rem 1rem 0;
+}
+#nav-1:hover {
+    background-color: var(--primary);
+}
+#nav-2:hover {
+    background-color: var(--secondary);
+}
+#nav-3:hover {
+    background-color: var(--tertiary);
+}
+#nav-4:hover {
+    background-color: var(--quaternary);
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(2, 100vw);
+    grid-template-rows: repeat(2, 100vh);
+    width: 200vw;
+    height: 200vh;
+    transition: transform 1s ease;
+}
+.page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 2rem;
+    color: rgb(209, 232, 252);
+    background-color: var(--primary);
+}
+
+.link-container {
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    flex-direction: column;
+
+    position: fixed;
+    z-index: 10;
+    display: flex;
+    padding: .2rem;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    border-radius: .2rem;
+    background-color: rgb(209, 232, 252);
+}
+.link-button {
+    width: 4rem;
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+ion-icon {
+    color: #333;
+    font-size: 4rem;
+}
+ion-icon[name="logo-linkedin"] {
+    color: #0077B5;
+}
+ion-icon[name="logo-github"] {
+    color: #2b3137;
+}
+ion-icon[name="logo-instagram"] {
+    color: #8134AF;
+}

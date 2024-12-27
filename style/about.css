@@ -1,0 +1,6 @@
+#about {
+    background-color: var(--primary);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

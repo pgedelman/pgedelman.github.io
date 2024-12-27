@@ -1,26 +1,23 @@
 function navigateToPage(pageNumber) {
     const container = document.querySelector('.container');
-    const offset = (pageNumber - 1) * -100;
-    container.style.transform = `translateX(${offset}vw)`;
+    const linkBar = document.querySelector('.link-container');
+    const pages = [[0,0],[-100,0],[0,-100],[-100,-100]];
 
-    const navBar = document.getElementById('nav-bar');
-    if (pageNumber === 1) {
-        navBar.classList.add('default-position');
-        navBar.classList.remove('other-position');
+    const targetX = pages[pageNumber-1][0];
+    const targetY = pages[pageNumber-1][1];
+
+    container.style.transform = `translate(${targetX}vw, ${targetY}vh)`;
+
+    if (pageNumber === 4) {
+        linkBar.style.flexDirection = 'row';
+        linkBar.style.right = '50%';
+        linkBar.style.top = '70%';
+        linkBar.style.transform = `translateX(${50}%)`;
     } else {
-        navBar.classList.add('other-position');
-        navBar.classList.remove('default-position');
+        linkBar.style.top = '50%';  
+        linkBar.style.right = '0';
+        linkBar.style.transform = 'translateY(-50%)';
+        linkBar.style.flexDirection = 'column';
     }
+    linkBar.style.transition = 'all 1s ease';
 }
-
-function adjustImageContainer() {
-    const containerHeight = document.getElementById('profile-container').offsetHeight;
-    const nameHeight = document.getElementById('name').offsetHeight;
-    const imageContainer = document.getElementById('image-container');
-    imageContainer.style.height = containerHeight - nameHeight + 'px';
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    navigateToPage(1);
-    adjustImageContainer();
-});

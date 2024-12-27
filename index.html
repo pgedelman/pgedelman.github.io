@@ -4,67 +4,131 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paul Edelman Porfolio</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style/main.css">
+    <link rel="stylesheet" href="style/about.css">
+    <link rel="stylesheet" href="style/experience.css">
+    <link rel="stylesheet" href="style/projects.css">
+    <link rel="stylesheet" href="style/contact.css">
 </head>
 <body>
     <nav id="nav-bar">
-        <button onclick="navigateToPage(1)">About</button>
-        <button onclick="navigateToPage(2)">Projects</button>
-        <button onclick="navigateToPage(3)">Experiences</button>
-        <button onclick="navigateToPage(4)">Skills</button>
-        <button onclick="navigateToPage(5)">Contact</button>
+        <button class="nav-button" id="nav-1" onclick="navigateToPage(1)">About</button>
+        <button class="nav-button" id="nav-2" onclick="navigateToPage(2)">Projects</button>
+        <button class="nav-button" id="nav-3" onclick="navigateToPage(3)">Experience</button>
+        <button class="nav-button" id="nav-4" onclick="navigateToPage(4)">Contact</button>
     </nav>
+    <ul class="link-container">
+        <a class="link-button" href="https://www.linkedin.com/in/paul-edelman/" target="_blank" aria-label="LinkedIn Profile">
+            <ion-icon name="logo-linkedin"></ion-icon>
+        </a>
+        <a class="link-button" href="https://github.com/pgedelman" target="_blank" aria-label="GitHub Profile">
+            <ion-icon name="logo-github"></ion-icon>
+        </a>
+        <a class="link-button" href="" target="_blank" aria-label="Instagram Profile">
+            <ion-icon name="logo-instagram"></ion-icon>
+        </a>
+    </ul>   
 
     <div class="container">
-        <section id="page1">
-            <div class="left-container" id="profile-container">
-                <div id="image-container">
-                    <img style="width: 100%;height:100%;" src="/images/referencepic.png">
-                </div>
+        <section class="page" id="about">
                 <h1 id="name">Paul Edelman</h1>
-            </div>
-            <div class="right-container">
-                <div class="top-section">
-                    <h2>About</h2>
-                    <div style="width:150em;"></div>
-                    <ul class="link-container">
-                        <a href="https://www.linkedin.com/in/paul-edelman/" target="_blank" aria-label="LinkedIn Profile">
-                            <ion-icon name="logo-linkedin"></ion-icon>
-                        </a>
-                        <a href="https://github.com/pgedelman" target="_blank" aria-label="GitHub Profile">
-                            <ion-icon name="logo-github"></ion-icon>
-                        </a>
-                        <a href="" target="_blank" aria-label="LinkedIn Profile">
-                            <ion-icon name="logo-instagram"></ion-icon>
-                        </a>
-                    </ul>
+                <h3 style="width:fit-content;padding:1rem">Programmer | Data Scientist | Beach Lifeguard</h3>
+				<p style="width:80vw;">&emsp;I am a Computer Science and Applied Mathematics student at the University of Delaware. Going into my sophomore year, I am excited for the new opportunities that will come my way. I've always loved computers, and for the past 3 years programming has been my outlet for that. With school, personal projects, Leetcode, and a research position at Delaware State University, I’ve immersed myself in the world of computer science. The heart of my professional interests involve seeing real outcomes from my programming, whether that be in machinery or a fine-tuned neural network.</p>
+        </section>
+        <section class="page" id="projects">
+            <h2 class="heading">Projects</h2>
+            <div class="projects-container">
+                <div class="project">
+                    <div class="top-container">
+                        <h3>Block-Smash</h3>
+                        <a href="https://github.com/pgedelman/Block-Smash" target="_blank">View Repository</a>
+                    </div>
+                    <p>
+                        Block Smash is a grid-based puzzle game where players strategically place blocks to complete and smash rows or columns, earning points and clearing space. The project integrates JavaScript and Python, showcasing its primary purpose: the development of Smash-Bot, an AI powered by a neural network that plays the game to achieve high scores. Through this project, I solidified my knowledge of JavaScript and Python while gaining experience in medium-sized projects, front/back-end programming, and machine learning.    
+                    </p>
                 </div>
-                <h3>Programmer | Data Scientist | Beach Lifeguard</h3>
-				<p>I am a Computer Science and Applied Mathematics student at the University of Delaware. Going into my sophomore year, I am excited for the new opportunities that will come my way. I've always loved computers, and for the past 3 years programming has been my outlet for that. With school, personal projects, Leetcode, and a research position at Delaware State University, I’ve immersed myself in the world of computer science. The heart of my interests involve seeing real outcomes from my programming, whether that be in machinery or a fine-tuned neural network.</p>
-                <div class="bottom-section">
-                    <h4>Please look at what I have been cultivating.</h4><ion-icon name="caret-down"></ion-icon>
+                <div class="project">
+                    <div class="top-container">
+                        <h3>Portfolio</h3>
+                        <a href="https://github.com/pgedelman/Portfolio" target="_blank">View Repository</a>
+                    </div>
+                    <p>
+                        This is my portfolio website in which you are currently looking at. I built this website to show off my versatality and dedication to learning new skills. 
+                    </p>
+                </div>
+                <div class="project">
+                    <div class="top-container">
+                        <h3>Weigh-Scale</h3>
+                        <a href="https://github.com/pgedelman/Weigh-Scale" target="_blank">View Repository</a>
+                    </div>
+                    <p>
+                        Weigh Scale is an arcade-style game where players slice flying fruit to drop their "weight" onto a scale. The game features two modes: Normal, where players aim to slice fruit before they escape the screen, and Bug, where only fruit should be sliced to gain weight, avoiding penalties for cutting bugs. This was the final project for my Intro to Computer Science course, designed to show my expertise with simple Python.
+                    </p>
+                </div>
+                <div class="project">
+                    <div class="top-container">
+                        <h3>Monkey-Game</h3>
+                        <a href="https://github.com/UD-S24-CISC181/final-project-pgedelman" target="_blank">View Repository</a>
+                    </div>
+                    <p>
+                        Monkey Game is a TypeScript-based project featuring two mini-games to test your memory and reaction time. Developed as the final project for my Intro to Computer Science II class, this project was pivotal in advancing my understanding of TypeScript and implementing interactive game mechanics. It allowed me to apply theoretical concepts in a practical, creative way while working with an instructor-provided library, strengthening my problem-solving and programming skills.
+                    </p>
                 </div>
             </div>
         </section>
-        <section id="page2">
-            <div class="main-container">
-                <h2>Projects</h2>
-                <div class="projects-container">
-                    <div class="project">
-                        <div class="top-container">
-                            <h3>Block-Smash</h3>
-                            <button>View Repository</button>
-                            <button>View Site</button>
-                        </div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        <section class="page" id="experience">
+            <h2 class="heading">Experience</h2>
+            <div class="experience-container">
+                <div class="top">
+                    <div class="experience">
+                        <h3>Physics Lab Intern at Delaware State University</h3>
+                        <p>- Worked with Python, C, and Matlab for interaction between Raspberry Pi, weather instruments, and Arduino boards.
+                            <br>- Presented and published research at a DSU research symposium</p>
+                    </div>
+                    <div class="experience">
+                        <h3>Computer Science Undergraduate Teaching Assistant</h3>
+                        <p>- Lead discussions on Python and introductory programming methods to students
+                            <br>- Worked with professors and other teaching assistants to make information digestible
                         </p>
                     </div>
+                    <div class="experience">
+                        <h3>Lifeguard at Delaware State Beach Patrol</h3>
+                        <p>- Trained to be physically and mentally capable of performing life saving operations
+                            <br>- Assisted patrons with medical issues on the beach and in the water
+                            <br>- Competed in lifesaving competitions against other patrols
+                            <br>- EMR, CPR, AED, and First Aid certified
+                        </p>
+                    </div>
+                </div>
+                <div class="bottom">
+                    <div class="experience " id="leetcode">
+                        <h3>Leetcode</h3>
+                        <p>
+                            I have practiced programming, data structures, and algorithms on Leetcode since 2022.
+                        </p>
+                        <br>
+                        <div style="text-align: center;">
+                            <a href="https://leetcode.com/u/pgedelman/" target="_blank">View Profile</a>
+                        </div>
+                    </div>
+                    <div class="experience" id="languages">
+                        <h3>Languages</h3>
+                        <p>asd;flkajsdflkasdjflkaddddd</p>
+                    </div>
+                </div>
             </div>
         </section>
-        <section id="page3">Experiences</section>
-        <section id="page4">Skills</section>
-        <section id="page5">Contact</section>
+        <section class="page" id="contact">
+            <h2 class="heading">Contact</h2>
+            <div class="contact-body">
+                <div id="left">
+                    Dover, DE<br>pgedelman@gmail.com
+                </div>
+                <a href="assets/Edelman UD Resume (1).pdf" download="Paul_Edelman_Resume.pdf" style="color: black;text-decoration: none;">
+                    Download Resume
+                </a>
+            </div>
+        </section>
     </div>
 
     <script src="script.js"></script>

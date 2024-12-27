@@ -1,0 +1,30 @@
+#contact {
+    background-color: var(--quaternary);
+}
+#contact .contact-body {
+    display:flex;
+    flex-direction: row;
+    width: fit-content;
+    gap: 2rem;
+}
+#contact #left {
+    display:flex;
+    flex-direction: row;
+    width:fit-content;
+}
+#contact .contact-body a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(209, 232, 252);
+    border: none;
+    color: black;
+    cursor: pointer;
+    padding: .4rem 1rem;
+    transition: background-color 0.2s;
+    font-size: 1.5rem;
+}
+#contact .contact-body a:hover {
+    transform: scale(105%);
+    transition: transform 0.3s ease;    
+}
