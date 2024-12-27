@@ -1,8 +1,10 @@
 :root {
-    --primary: #035AA6    ;
-    --secondary: #E2B13D   ;
-    --tertiary: #519872      ;  
-    --quaternary: #7E3F8F   ;
+    --primary: #016394    ;
+    --secondary: #32965D   ;
+    --tertiary: #277380      ;  
+    --quaternary: #4A99E8   ;
+    --white: rgb(209, 232, 252);
+    --black: #222222;
   }
 * {
     margin: 0;
@@ -14,7 +16,8 @@ body, html {
     height: 100%;
     overflow: hidden;
     font-family: 'Lato', sans-serif;
-    background-color: #F3F4F6;
+    background-color: var(--black);
+    color: var(--black);
 }
 
 h1 {
@@ -38,7 +41,7 @@ h3 {
     justify-content: center;
 }
 
-#nav-bar {
+.navBar {
     position: absolute;
     top: 1rem;
     left: 50%;
@@ -49,39 +52,47 @@ h3 {
     justify-content: space-around;
     background-color: none;
     gap:none;
+    color: var(--white);
 }
-#nav-bar .nav-button:hover {
-    transform: scale(110%);
-    transition: transform 0.3s ease;    
+.navBar .nav-button {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+.navBar .nav-button:hover {
+  transform: scale(110%);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
-#nav-bar button {
+.navBar .nav-button.active {
+  transform: scale(110%);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.navBar .nav-button:hover:not(.active) + .nav-button.active {
+    transform: none;
+    box-shadow: none;
+  }
+.navBar .nav-button {
+    width:100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    font-weight:bold;
+    text-align: center;
     padding: 0.5rem 1.5rem;
-    color: #333;
-    background-color: rgb(209, 232, 252);
-    border:none;
     cursor: pointer;
     font-size: 1rem;
     transition: background-color 0.3s;
 }
-#nav-bar button:hover {
-    color:rgb(209, 232, 252);    
-}
 #nav-1 {
     border-radius: 1rem 0 0 1rem;
+    background-color: var(--primary);
+}
+#nav-2 {
+    background-color: var(--secondary);
+}
+#nav-3 {
+    background-color: var(--tertiary);
 }
 #nav-4 {
     border-radius: 0 1rem 1rem 0;
-}
-#nav-1:hover {
-    background-color: var(--primary);
-}
-#nav-2:hover {
-    background-color: var(--secondary);
-}
-#nav-3:hover {
-    background-color: var(--tertiary);
-}
-#nav-4:hover {
     background-color: var(--quaternary);
 }
 
@@ -99,8 +110,6 @@ h3 {
     align-items: center;
     flex-direction: column;
     font-size: 2rem;
-    color: rgb(209, 232, 252);
-    background-color: var(--primary);
 }
 
 .link-container {
@@ -108,7 +117,6 @@ h3 {
     right: 0;
     transform: translateY(-50%);
     flex-direction: column;
-
     position: fixed;
     z-index: 10;
     display: flex;
@@ -117,7 +125,7 @@ h3 {
     align-items: center;
     gap: 1rem;
     border-radius: .2rem;
-    background-color: rgb(209, 232, 252);
+    background-color: var(--white);
 }
 .link-button {
     width: 4rem;
@@ -127,7 +135,6 @@ h3 {
     align-items: center;
 }
 ion-icon {
-    color: #333;
     font-size: 4rem;
 }
 ion-icon[name="logo-linkedin"] {

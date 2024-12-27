@@ -18,7 +18,7 @@
 }
 #projects .project {
     display: flex;
-    background-color: rgb(209, 232, 252);
+    background-color: var(--white);
     border-radius: .6rem;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     flex-direction: column;
@@ -42,9 +42,9 @@
 #projects a {
     display: flex;
     text-align: center;
-    background-color: var(--primary);
+    background-color: var(--secondary);
     border: none;
-    color: rgb(209, 232, 252);
+    color: var(--white);
     cursor: pointer;
     font-size: .8rem;
     justify-content: center;

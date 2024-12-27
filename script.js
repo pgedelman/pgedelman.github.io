@@ -1,4 +1,10 @@
+let selectedPage = 1;
+
 function navigateToPage(pageNumber) {
+    document.getElementById('nav-' + selectedPage).classList.remove('active');
+    selectedPage = pageNumber;
+    document.getElementById('nav-' + selectedPage).classList.add('active');
+
     const container = document.querySelector('.container');
     const linkBar = document.querySelector('.link-container');
     const pages = [[0,0],[-100,0],[0,-100],[-100,-100]];
@@ -21,3 +27,13 @@ function navigateToPage(pageNumber) {
     }
     linkBar.style.transition = 'all 1s ease';
 }
+
+document.querySelectorAll('.nav-button').forEach((button) => {
+    button.addEventListener('mouseenter', () => {
+        document.getElementById('nav-' + selectedPage).classList.remove('active');
+    });
+
+    button.addEventListener('mouseleave', () => {
+        document.getElementById('nav-' + selectedPage).classList.add('active');
+    });
+});
