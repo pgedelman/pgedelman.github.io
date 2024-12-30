@@ -23,7 +23,7 @@
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     flex-direction: column;
     padding: .6rem;
-    color: black;
+    color: var(--black);
 }
 #projects .project:hover {
     transform: scale(1.05);
@@ -38,6 +38,7 @@
 #projects .top-container h3 {
     width: 50%;
     text-align: center;
+    text-decoration: underline;
 }   
 #projects a {
     display: flex;
@@ -46,15 +47,17 @@
     border: none;
     color: var(--white);
     cursor: pointer;
-    font-size: .8rem;
+    font-size: 1rem;
     justify-content: center;
     align-items: center;
     padding: .4rem 1rem;
     text-decoration: none;
+    width: 50%;
+    font-weight: bold;
 }
 #projects a:hover {
-    background-color: #0d518c;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 15px;
 }
 #projects .project p {
-    font-size: 1rem;
+    font-size: 1.2rem;
 }

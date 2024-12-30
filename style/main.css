@@ -59,11 +59,11 @@ h3 {
   }
 .navBar .nav-button:hover {
   transform: scale(110%);
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 15px;
 }
 .navBar .nav-button.active {
   transform: scale(110%);
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  box-shadow: rgba(0, 0, 0, 0.55) 0px 5px 15px;
 }
 .navBar .nav-button:hover:not(.active) + .nav-button.active {
     transform: none;
