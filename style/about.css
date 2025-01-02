@@ -5,5 +5,5 @@
     align-items: center;
 }
 #about p {
-    font-size: var(--fs-regular);
+    font-size: var(--fs-medium);
 }
