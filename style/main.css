@@ -5,11 +5,26 @@
     --quaternary: #4A99E8   ;
     --white: rgb(209, 232, 252);
     --black: #222222;
-  }
+    --fs-small: 0.5rem;
+    --fs-regular: .7rem;
+    --fs-medium: 1.2rem;
+    --fs-large: 2.5rem;
+    --fs-xlarge: 3.4rem;
+}
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+    :root {
+        --fs-small: 0.9rem;
+        --fs-regular: 1.2rem;
+        --fs-medium: 1.5rem;
+        --fs-large: 3rem;
+        --fs-xlarge: 4rem;
+    }
 }
 
 body, html {
@@ -23,11 +38,11 @@ body, html {
 h1 {
     margin: 0;
     padding: 0 1rem;
-    font-size: 5.5rem;
+    font-size: var(--fs-xlarge);
 }
 h2 {
     width: 100%;
-    font-size: 3rem;
+    font-size: var(--fs-large);
     align-items: center;
     justify-content: center;
 }
@@ -37,7 +52,7 @@ h2 {
 }
 h3 {
     width: 100%;
-    font-size: 1.5rem;
+    font-size: var(--fs-medium);
     justify-content: center;
 }
 
@@ -56,6 +71,7 @@ h3 {
 }
 .navBar .nav-button {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    font-size: var(--fs-small);
   }
 .navBar .nav-button:hover {
   transform: scale(110%);
@@ -128,14 +144,12 @@ h3 {
     background-color: var(--white);
 }
 .link-button {
-    width: 4rem;
-    height: 4rem;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 ion-icon {
-    font-size: 4rem;
+    font-size: var(--fs-xlarge);
 }
 ion-icon[name="logo-linkedin"] {
     color: #0077B5;

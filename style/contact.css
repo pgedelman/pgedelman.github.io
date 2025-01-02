@@ -21,7 +21,7 @@
     cursor: pointer;
     padding: .4rem 1rem;
     transition: background-color 0.2s;
-    font-size: 1.5rem;
+    font-size: var(--fs-medium);
 }
 #contact .contact-body a:hover {
     transform: scale(105%);

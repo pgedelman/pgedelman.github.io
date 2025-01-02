@@ -37,3 +37,5 @@ document.querySelectorAll('.nav-button').forEach((button) => {
         document.getElementById('nav-' + selectedPage).classList.add('active');
     });
 });
+
+navigateToPage(1);
