@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/pgedelman.github.io/static/css/main.6d31235a.css",
+    "main.js": "/pgedelman.github.io/static/js/main.47439294.js",
+    "static/media/profile.png": "/pgedelman.github.io/static/media/profile.c885fed0f1ae1255598e.png",
+    "index.html": "/pgedelman.github.io/index.html",
+    "main.6d31235a.css.map": "/pgedelman.github.io/static/css/main.6d31235a.css.map",
+    "main.47439294.js.map": "/pgedelman.github.io/static/js/main.47439294.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6d31235a.css",
+    "static/js/main.47439294.js"
+  ]
+}
