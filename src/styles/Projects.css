@@ -1,0 +1,47 @@
+.projects-container {
+    background-color: #2da3df;
+    padding: 2%;
+}
+.project {
+    flex-direction: column;
+    justify-content: center;
+}
+.name {
+    font-size: 2.5rem;
+    justify-self: center;
+}
+.top-container {
+    display: flex;
+    flex-direction: rows;
+    padding-bottom: .4rem;
+    gap: 1rem;
+}
+.project .top-container div {
+    width: 50%;
+    text-align: center;
+}   
+.project a {
+    display: inline-block;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    background-color: var(--soft-black);
+    border: none;
+    cursor: pointer;
+    padding: .4rem 1rem;
+    transition: background-color 0.2s;
+    font-size: 1.2rem;
+}
+  
+.project a:hover {
+    transform: scale(105%);
+    transition: transform 0.3s ease;    
+}
+.project p {
+    font-size: var(--fs-regular);
+}
+
+.project-name {
+    font-size: 1.25rem;
+    font-weight: bold;
+}

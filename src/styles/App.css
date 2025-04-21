@@ -1,0 +1,44 @@
+.app {
+  font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  color: black;
+}
+
+:root {
+  --soft-black: #2a2a2a;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.content {
+  background-color: var(--soft-black);
+  min-height: calc(100vh - 70px);
+  display: flex;
+  flex-direction: column;
+} 
+
+.page {
+  margin: 1% 0 1% 0;
+  scroll-margin-top: 100px;
+}
+
+.white-box {
+  background-color: #f5f7fa;
+  border-radius:   8px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  padding: .6rem;
+}
+.white-box:hover {
+  transform: scale(1.02, 1.01);
+  transition: transform 0.3s ease;
+}
+
+.main-shadow {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4), 0 4px 8px rgba(0, 0, 0, 0.3);
+}

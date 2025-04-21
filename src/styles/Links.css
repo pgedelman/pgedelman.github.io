@@ -1,0 +1,19 @@
+.link-container {
+    flex-direction: row;
+    display: flex;
+    padding: .2rem;
+    justify-content: center;
+    align-items: center;
+    border-radius: .2rem;
+    background-color: white;
+    list-style-type: none;
+    gap: .5rem;
+}
+.link-container a {
+    padding: 0;
+    background-color: white;
+}
+.link-container a:hover {
+    transform: scale(110%);
+    transition: transform 0.3s ease;  
+}

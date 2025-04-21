@@ -1,0 +1,22 @@
+.experiences-container {
+    background-color: rgb(189, 67, 67);
+    padding: 2%;
+}
+
+.experiences-container a {
+    display: inline-block;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    background-color: var(--soft-black);
+    border: none;
+    cursor: pointer;
+    padding: .4rem 1rem;
+    transition: background-color 0.2s;
+    font-size: 1.2rem;
+}
+  
+.experiences-container a:hover {
+    transform: scale(105%);
+    transition: transform 0.3s ease;    
+}

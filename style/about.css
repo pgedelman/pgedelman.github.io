@@ -1,9 +1,0 @@
-#about {
-    background-color: var(--primary);
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-#about p {
-    font-size: var(--fs-medium);
-}
