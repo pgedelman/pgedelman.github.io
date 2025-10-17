@@ -24,9 +24,10 @@ function Experience({e}: {e: ExperienceContent}) {
 const dsu: ExperienceContent = {heading: "Physics Lab Intern at Delaware State University", descriptions: ["Worked with Python, C, and Matlab for interaction between Raspberry Pi, weather instruments, and Arduino boards.", "Presented and published research at a DSU research symposium"]};
 const ta: ExperienceContent = {heading: "Computer Science Undergraduate Teaching Assistant", descriptions: ["Lead discussions on Python and introductory programming methods to students", "Worked with professors and other teaching assistants to make information digestible"]};
 const lifeguard: ExperienceContent = {heading: "Lifeguard at Delaware State Beach Patrol", descriptions: ["Trained to be physically and mentally capable of performing life saving operations", "Assisted patrons with medical issues on the beach and in the water", "Competed in lifesaving competitions against other patrols"]};
+const airGreen: ExperienceContent = {heading: "Software Engineering Intern at AirGreen", descriptions: ["Developed optimized Python data pipelines and SQL architectures for real-time IoT analytics, improving data throughput and query speed by 40%.", "Applied thermodynamic and statistical models to generate predictive insights and boost system efficiency."]};
 
 function Experiences() {
-  const experiences: ExperienceContent[] = [dsu, ta, lifeguard];
+  const experiences: ExperienceContent[] = [airGreen, dsu, ta, lifeguard];
 
   return (
     <div id="experiences" className="page experiences-container main-shadow">
