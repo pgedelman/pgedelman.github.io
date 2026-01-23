@@ -1,11 +1,11 @@
 .app {
-  font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   max-width: 100%;
   margin: 0 auto;
   padding: 0;
-  color: black;
+  color: white;
 }
 
 :root {
@@ -17,7 +17,7 @@ html {
 }
 
 .content {
-  background-color: var(--soft-black);
+  background-color: black;
   min-height: calc(100vh - 70px);
   display: flex;
   flex-direction: column;
@@ -29,16 +29,51 @@ html {
 }
 
 .white-box {
-  background-color: #f5f7fa;
+  background-color: #181818;
   border-radius:   8px;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  padding: .6rem;
+  box-shadow: 0 4px 60px rgba(0,0,0,0.5);
+  padding: 1.5rem;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 .white-box:hover {
-  transform: scale(1.02, 1.01);
-  transition: transform 0.3s ease;
+  transform: translateY(-6px);
 }
 
 .main-shadow {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4), 0 4px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  margin-top: 0;
+}
+
+.name {
+  font-size: 3rem;
+  font-weight: 900;
+  margin-bottom: 2rem;
+  text-align: center;
+  width: 100%;
+}
+
+.skills-filter {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  padding: 0 10%;
+}
+
+.skill-tag {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #b3b3b3;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  cursor: default;
 }
