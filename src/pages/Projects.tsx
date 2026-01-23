@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Grid from '../components/Grid';
 import '../styles/Projects.css';
 import '../styles/App.css';
@@ -7,36 +7,100 @@ interface ProjectContent {
   name: string;
   description: string;
   link: string;
+  skills: string[];
 };
 
-function Project({p}: {p: ProjectContent}) {
+function Project({p, highlightedSkill}: {p: ProjectContent, highlightedSkill: string | null}) {
   return (
     <div className='white-box project'>
       <div className='top-container'>
         <div className='project-name'>{p.name}</div>
-        <a href={p.link} target="_blank" rel="noreferrer">View Site</a>
+        {p.link && <a href={p.link} target="_blank" rel="noreferrer">View Site</a>}
       </div>
-      <div>{p.description}</div>
+      <div style={{marginBottom: '1rem'}}>{p.description}</div>
+      <div style={{display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'center'}}>
+        {p.skills.map(skill => (
+          <span 
+            key={skill} 
+            className='skill-tag'
+            style={{
+              backgroundColor: skill === highlightedSkill ? 'black' : 'rgba(255,255,255,0.1)',
+              color: skill === highlightedSkill ? 'white' : 'black',
+              transform: skill === highlightedSkill ? 'scale(1.1)' : 'scale(1)',
+              borderColor: 'black'
+            }}
+          >
+            {skill}
+          </span>
+        ))}
+      </div>
     </div>
   );
 }
 
-const blockSmash: ProjectContent = {name: "Block-Smash", link: "https://github.com/pgedelman/Block-Smash", description: "Block Smash is a grid-based puzzle game where players strategically place blocks to complete and smash rows or columns, earning points and clearing space. The project integrates JavaScript and Python, showcasing its primary purpose: the development of Smash-Bot, an AI powered by a neural network that plays the game to achieve high scores. Through this project, I solidified my knowledge of JavaScript and Python while gaining experience in medium-sized projects, front/back-end programming, and machine learning."};
-const weighScale: ProjectContent = {name: "Weigh-Scale", link: "https://github.com/pgedelman/Weigh-Scale", description: "Weigh Scale is an arcade-style game where players slice flying fruit to drop their 'weight' onto a scale. The game features two modes: Normal, where players aim to slice fruit before they escape the screen, and Bug, where only fruit should be sliced to gain weight, avoiding penalties for cutting bugs. This was the final project for my Intro to Computer Science course, designed to show my expertise with simple Python."};
-const monkeyGame: ProjectContent = {name: "Monkey-Game", link: "https://ud-s24-cisc181.github.io/final-project-pgedelman/", description: "Monkey Game is a TypeScript-based project featuring two mini-games to test your memory and reaction time. Developed as the final project for my Intro to Computer Science II class, this project was pivotal in advancing my understanding of TypeScript and implementing interactive game mechanics. It allowed me to apply theoretical concepts in a practical, creative way while working with an instructor-provided library, strengthening my problem-solving and programming skills."};
-const portfolio: ProjectContent = {name: "Portfolio", link: "https://github.com/pgedelman/Portfolio", description: "This is my portfolio website in which you are currently looking at. I built this website to show off my versatality and dedication to learning new skills."}
+const whiteboard: ProjectContent = {
+  name: "Real-time Collaborative Whiteboard", 
+  link: "", 
+  description: "Engineered a high-concurrency collaborative application using WebSockets to enable multi-user canvas synchronization with sub-100ms latency. Architected a scalable Node.js/Express backend and MongoDB schema to persist complex vector data and maintain state consistency across distributed client sessions. Optimized frontend performance by implementing Optimistic UI updates and custom state-management logic. Leveraged Vite and modular React components to reduce build times.",
+  skills: ["React", "Socket.io", "Node.js", "MongoDB", "JavaScript", "HTML/CSS"]
+};
+
+const predictSports: ProjectContent = {
+  name: "PredictSports",
+  link: "",
+  description: "Built automated ETL pipelines to aggregate 60 years of NFL statistics into a normalized SQL database for high-speed querying and model training. Trained an LSTM model using TensorFlow to forecast NFL game outcomes, achieving accuracy exceeding baseline models. Integrated data quality checks and performance optimizations to support rapid experimentation and deployment.",
+  skills: ["Python", "SQL", "TensorFlow", "Playwright", "pandas", "NumPy"]
+};
+
+const blockSmash: ProjectContent = {
+  name: "Block-Smash", 
+  link: "https://github.com/pgedelman/Block-Smash", 
+  description: "Leveraged JavaScript for a responsive front-end and Node.js to manage robust server-side functionalities. Built a scalable Python/Flask backend with real-time state management and low-latency client-server communication. Developed Smash-Bot, an AI game agent powered by PyTorch neural networks, to analyze gameplay patterns and execute high-scoring strategies.",
+  skills: ["JavaScript", "Python", "Flask", "Node.js", "PyTorch"]
+};
+
+const portfolio: ProjectContent = {
+  name: "Portfolio", 
+  link: "https://github.com/pgedelman/Portfolio", 
+  description: "This is my portfolio website which you are currently viewing. I built this website to showcase my versatility and dedication to learning new skills.",
+  skills: ["React", "HTML/CSS", "JavaScript"]
+};
 
 
 function Projects() {
-  const projects: ProjectContent[] = [blockSmash, weighScale, monkeyGame, portfolio];
+  const projects: ProjectContent[] = [whiteboard, predictSports, blockSmash, portfolio];
+  const [highlightedSkill, setHighlightedSkill] = useState<string | null>(null);
+
+  // Extract unique skills from projects
+  const allProjectSkills = Array.from(new Set(projects.flatMap(p => p.skills))).sort();
 
   return (
     <div id="projects" className='page projects-container main-shadow'>
       <div className='name'>Projects</div>
+      
+      <div className='skills-filter'>
+        {allProjectSkills.map(skill => (
+          <span 
+            key={skill} 
+            className='skill-tag'
+            onMouseEnter={() => setHighlightedSkill(skill)}
+            onMouseLeave={() => setHighlightedSkill(null)}
+            style={{
+              backgroundColor: skill === highlightedSkill ? 'white' : 'rgba(255,255,255,0.1)',
+              color: skill === highlightedSkill ? 'black' : 'white',
+              transform: skill === highlightedSkill ? 'scale(1.1)' : 'scale(1)',
+              cursor: 'pointer'
+            }}
+          >
+            {skill}
+          </span>
+        ))}
+      </div>
+
       { 
         <Grid>
           { projects.map((project: ProjectContent) => (
-            <Project p={project}></Project>
+            <Project p={project} highlightedSkill={highlightedSkill}></Project>
           ))}
         </Grid>
       }

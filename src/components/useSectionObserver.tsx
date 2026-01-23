@@ -15,8 +15,8 @@ const useSectionObserver = (sectionIds: string[]) => {
         },
         {
             root: null,
-            rootMargin: '-100px 0px 0px 0px',
-            threshold: .6, // Adjust this to control how much of a section must be visible
+            rootMargin: '-45% 0px -45% 0px',
+            threshold: 0,
         }
     );
 
