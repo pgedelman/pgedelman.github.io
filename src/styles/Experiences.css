@@ -28,3 +28,11 @@
     transform: scale(105%);
     transition: transform 0.3s ease;    
 }
+
+.experiences-container ul {
+    padding-left: 1.2rem;
+}
+
+.experiences-container li {
+    margin-bottom: 0.5rem;
+}

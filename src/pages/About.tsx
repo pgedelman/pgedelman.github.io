@@ -7,7 +7,10 @@ function About() {
   return (
     <div id="about" className="page about-container">
       <div className="left main-shadow">
-        <h1>Paul Edelman</h1>
+        <div className="about-header">
+          <h1>Paul Edelman</h1>
+          <img className="mobile-profile-pic" src={picture} alt="Paul Edelman"/>
+        </div>
         <h3>Software Engineer | Data Scientist | Beach Lifeguard</h3>
         <p className='intro'>
           &emsp;I am a Computer Science and Applied Mathematics student at the University of Delaware. 

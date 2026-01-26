@@ -1,5 +1,6 @@
 .contact-container {
-    height: 80vh;
+    min-height: 80vh;
+    height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -48,4 +49,23 @@
 .contact-body a:hover {
     transform: scale(105%);
     transition: transform 0.3s ease;    
+}
+
+@media screen and (max-width: 768px) {
+    .contact-body {
+        width: 90%;
+        height: auto;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .contact-container p {
+        width: 100%;
+        justify-content: center;
+        font-size: 1.2rem;
+    }
+
+    .contact-body a {
+        width: 100%;
+    }
 }
