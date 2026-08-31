@@ -46,6 +46,18 @@ function Experience({e, highlightedSkill}: {e: ExperienceContent, highlightedSki
     );
 }
 
+const deljis: ExperienceContent = {
+    heading: "Software Engineer at DELJIS",
+    descriptions: [
+        "Architected a Kubernetes-inspired container orchestration platform in C# on Linux, using Podman to drive the full container lifecycle (provisioning, networking, teardown) from declarative configuration plans.",
+        "Used systemd to supervise each managed container, restarting it automatically according to a configurable restart policy whenever the container's image or configuration changed.",
+        "Detected configuration and image changes via FileSystemWatcher for local configs and WebSocket listeners for configs on a remote server, feeding both into the same systemd-driven restart pipeline, with logs and lifecycle events available locally or streamed to the server in real time.",
+        "Built a REST API as the orchestration backbone, plus a developer-facing CLI for plan registration, deployment control, health monitoring, and local-plan dev mode.",
+        "Automated hotfix delivery via declarative plan updates instead of code redeploys, cutting deployment time approximately 90%."
+    ],
+    skills: ["C#", "Podman", "systemd", "Kubernetes", "GitLab CI/CD"]
+};
+
 const airGreen: ExperienceContent = {
     heading: "Software/Data Engineering Intern at AirGreen", 
     descriptions: [
@@ -68,27 +80,18 @@ const ta: ExperienceContent = {
     skills: ["Python", "Git"]
 };
 
-const dsu: ExperienceContent = {
-    heading: "Physics Lab Intern at Delaware State University", 
-    descriptions: [
-        "Engineered multi-sensor acquisition using Raspberry Pi, Arduino, and Python to collect real-time environmental data.",
-        "Processed and analyzed datasets with MATLAB, implementing signal filtering and statistical analysis pipelines."
-    ],
-    skills: ["Python"]
-};
-
 const school: ExperienceContent = {
     heading: "University of Delaware - Technical Skills",
     descriptions: [
         "Skills and technologies acquired through rigorous coursework, academic projects, and self-study."
     ],
-    skills: ["C/C++", "Java", "R", "FastAPI", "Docker", "CI/CD", "Google Cloud Platform", "Operating Systems", "Computer Architecture", "Machine Learning"]
+    skills: ["C/C++", "Java", "Go", "Distributed Systems", "R", "FastAPI", "Docker", "Kubernetes", "GitLab CI/CD", "Google Cloud Platform", "Operating Systems", "Computer Architecture", "Machine Learning"]
 };
 
 const leetCode: ExperienceContent = {
     heading: "LeetCode",
     descriptions: [
-        "Practiced programming, data structures, and algorithms on Leetcode since 2022, completing over 220 problems.",
+        "Practiced programming, data structures, and algorithms on Leetcode since 2022, completing over 300 problems.",
         "Consistently participate in weekly contests to sharpen problem-solving skills under time constraints."
     ],
     skills: ["Data Structures", "Algorithms", "Java", "C++"],
@@ -96,7 +99,7 @@ const leetCode: ExperienceContent = {
 };
 
 function Experiences() {
-  const experiences: ExperienceContent[] = [airGreen, ta, dsu, leetCode, school];
+  const experiences: ExperienceContent[] = [deljis, airGreen, ta, leetCode, school];
   const [highlightedSkill, setHighlightedSkill] = useState<string | null>(null);
 
   // Extract unique skills from experiences

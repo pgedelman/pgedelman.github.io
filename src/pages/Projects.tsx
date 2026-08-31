@@ -13,11 +13,13 @@ interface ProjectContent {
 function Project({p, highlightedSkill}: {p: ProjectContent, highlightedSkill: string | null}) {
   return (
     <div className='white-box project'>
-      <div className='top-container'>
-        <div className='project-name'>{p.name}</div>
-        {p.link && <a href={p.link} target="_blank" rel="noreferrer">View Site</a>}
-      </div>
+      <div className='project-name'>{p.name}</div>
       <div style={{marginBottom: '1rem'}}>{p.description}</div>
+      {p.link && (
+        <div style={{textAlign: 'center', marginBottom: '1rem'}}>
+          <a href={p.link} target="_blank" rel="noreferrer">View Repository</a>
+        </div>
+      )}
       <div style={{display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'center'}}>
         {p.skills.map(skill => (
           <span 
@@ -38,37 +40,58 @@ function Project({p, highlightedSkill}: {p: ProjectContent, highlightedSkill: st
   );
 }
 
+const ticker: ProjectContent = {
+  name: "Ticker",
+  link: "https://github.com/pgedelman/ticker",
+  description: "A market-data distribution system in Go, built on a from-scratch Raft implementation: leader election, log replication, crash recovery. Message ordering stays correct even when nodes go down, and a test suite simulates node failures to check that holds up.",
+  skills: ["Go", "Distributed Systems", "Raft", "Testing"]
+};
+
 const whiteboard: ProjectContent = {
-  name: "Real-time Collaborative Whiteboard", 
-  link: "", 
-  description: "Engineered a high-concurrency collaborative application using WebSockets to enable multi-user canvas synchronization with sub-100ms latency. Architected a scalable Node.js/Express backend and MongoDB schema to persist complex vector data and maintain state consistency across distributed client sessions. Optimized frontend performance by implementing Optimistic UI updates and custom state-management logic. Leveraged Vite and modular React components to reduce build times.",
+  name: "Real-time Collaborative Whiteboard",
+  link: "https://github.com/pgedelman/fancy-whiteboard",
+  description: "A React frontend and Node/Express backend synced over WebSockets, so multiple people can draw on the same canvas with sub-100ms latency. MongoDB stores the canvas state and keeps it consistent across sessions, and optimistic UI updates keep drawing feeling instant before the server confirms.",
   skills: ["React", "Socket.io", "Node.js", "MongoDB", "JavaScript", "HTML/CSS"]
 };
 
 const predictSports: ProjectContent = {
   name: "PredictSports",
-  link: "",
-  description: "Built automated ETL pipelines to aggregate 60 years of NFL statistics into a normalized SQL database for high-speed querying and model training. Trained an LSTM model using TensorFlow to forecast NFL game outcomes, achieving accuracy exceeding baseline models. Integrated data quality checks and performance optimizations to support rapid experimentation and deployment.",
-  skills: ["Python", "SQL", "TensorFlow", "Playwright", "pandas", "NumPy"]
+  link: "https://github.com/pgedelman/PredictSports",
+  description: "Scraped decades of NFL game data with Playwright and cleaned it into a MySQL database. Trained a neural network with TensorFlow/PyTorch to forecast game outcomes, working through the full pipeline from raw data to a trained model.",
+  skills: ["Python", "SQL", "TensorFlow", "PyTorch", "Playwright"]
+};
+
+const minictl: ProjectContent = {
+  name: "minictl",
+  link: "https://github.com/pgedelman/mini-docker-clone",
+  description: "A container runtime built from scratch in C, using chroot sandboxing, Linux namespaces, rootless UID/GID mapping, and cgroups v2 resource limits. Built directly on raw syscalls, no libcontainer or runc involved.",
+  skills: ["C", "Linux", "Namespaces", "cgroups"]
+};
+
+const footprint: ProjectContent = {
+  name: "FootPrint",
+  link: "https://github.com/ShauryaKumarr/FootPrint",
+  description: "2nd place at HenHacks. A spending-to-carbon tracker that connects to your bank through Plaid, scores every transaction by carbon impact, and rewards greener choices. Built the React/Vite frontend and Express backend, and wired up the Plaid integration for real-time transaction scoring.",
+  skills: ["React", "Express", "Plaid API", "Tailwind CSS"]
 };
 
 const blockSmash: ProjectContent = {
-  name: "Block-Smash", 
-  link: "https://github.com/pgedelman/Block-Smash", 
-  description: "Leveraged JavaScript for a responsive front-end and Node.js to manage robust server-side functionalities. Built a scalable Python/Flask backend with real-time state management and low-latency client-server communication. Developed Smash-Bot, an AI game agent powered by PyTorch neural networks, to analyze gameplay patterns and execute high-scoring strategies.",
+  name: "Block-Smash",
+  link: "https://github.com/pgedelman/Block-Smash",
+  description: "A block-puzzle game with a JavaScript front end and a Python/Flask backend handling real-time state. Smash-Bot is a PyTorch model trained to play the game, learning patterns that lead to high scores.",
   skills: ["JavaScript", "Python", "Flask", "Node.js", "PyTorch"]
 };
 
 const portfolio: ProjectContent = {
-  name: "Portfolio", 
-  link: "https://github.com/pgedelman/Portfolio", 
+  name: "Portfolio",
+  link: "https://github.com/pgedelman/pgedelman.github.io",
   description: "This is my portfolio website which you are currently viewing. I built this website to showcase my versatility and dedication to learning new skills.",
   skills: ["React", "HTML/CSS", "JavaScript"]
 };
 
 
 function Projects() {
-  const projects: ProjectContent[] = [whiteboard, predictSports, blockSmash, portfolio];
+  const projects: ProjectContent[] = [ticker, whiteboard, predictSports, minictl, footprint, blockSmash, portfolio];
   const [highlightedSkill, setHighlightedSkill] = useState<string | null>(null);
 
   // Extract unique skills from projects
