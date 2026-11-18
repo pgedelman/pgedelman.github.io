@@ -9,10 +9,13 @@ Welcome to the repository for my personal portfolio website. This project showca
 This website serves as a central hub for my professional identity. It is designed to be clean, responsive, and interactive, providing visitors with an overview of my technical capabilities and career journey.
 
 ### Key Features
-*   **Responsive Design:** Optimized for seamless viewing on desktops, tablets, and mobile devices.
-*   **Interactive Filtering:** Projects and work experiences can be filtered by specific skills (e.g., Python, React, SQL) to highlight relevant expertise.
-*   **Smooth Navigation:** Intuitive navigation with smooth scrolling between sections.
-*   **Modern UI:** Built with custom CSS for a unique and polished look, featuring a dark/light theme aesthetic.
+*   **Edge-anchored layout:** Each section has its own color and panels that attach to the side of the screen (About blue, Projects gold, Experience red, Contact red).
+*   **Color meaning:** Blue marks personal items, gold marks things I've built, and red marks work and hiring.
+*   **Skill filtering:** Hover or tap a skill to dim projects that don't use it; hover a project to light up its skills (shown in a floating strip if the bar is off screen).
+*   **Expandable experience timeline:** Every role shows its key bullets, with longer ones expanding on demand.
+*   **Command palette:** Press `Ctrl K` / `⌘ K` to jump to any section, project, or the resume.
+*   **In-page PDF viewer:** Resume and research abstract open in a modal with download and open-in-new-tab options.
+*   **Responsive:** Tuned for desktop down to 360px-wide phones; respects reduced-motion settings.
 
 ## 🛠️ Built With
 
@@ -47,11 +50,23 @@ To run this project locally, follow these steps:
     ```
     The app will run in development mode at `http://localhost:3000`.
 
+## 🚢 Deployment
+
+The site is served by GitHub Pages from the `gh-pages` branch. To publish:
+
+```bash
+npm run deploy   # builds, then pushes build/ to gh-pages
+```
+
+`public/CNAME` keeps the `paul-edelman.com` custom domain in every deploy.
+
 ## 📂 Project Structure
 
-*   `src/components`: Reusable UI components (Navbar, Grid, Links, etc.).
-*   `src/pages`: Main sections of the website (About, Projects, Experiences, Contact).
-*   `src/styles`: CSS files for styling components and pages.
+*   `src/data/content.ts`: All site text: profile, stats, projects, experience, skills.
+*   `src/App.tsx`: Page sections (hero, projects, experience, contact).
+*   `src/components`: Command palette, PDF modal, social links.
+*   `src/hooks.ts`: Scroll, in-view, and count-up hooks.
+*   `src/styles/site.css`: All styling, including the color tokens.
 
 ## 📫 Contact
 
