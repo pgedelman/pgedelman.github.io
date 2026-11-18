@@ -1,6 +1,5 @@
-/* Final: bento layout, soft serif type, green-led accents used sparingly. */
+/* Edges: bento layout, soft serif type. Colors: blue = me, gold = built, red = work/hiring. */
 :root {
-  --green: rgb(54, 206, 100);
   --gold: rgb(240, 173, 59);
   --blue: #2da3df;
   --red: rgb(189, 67, 67);
@@ -48,7 +47,7 @@ main { max-width: 1200px; margin: 0 auto; padding: 24px; }
 
 /* ---------- Buttons ---------- */
 .btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; border-radius: 8px; font-size: 0.86rem; font-weight: 600; transition: background 0.2s, border-color 0.2s, color 0.2s; }
-.btn--primary { background: var(--primary); color: #03131d; }
+.btn--primary { background: var(--primary); color: var(--ink, #03131d); }
 .btn--primary:hover { background: color-mix(in srgb, var(--primary) 85%, #fff); }
 .btn--ghost { border: 1px solid var(--line-strong); }
 .btn--ghost:hover { border-color: var(--text); }
@@ -90,6 +89,7 @@ main { max-width: 1200px; margin: 0 auto; padding: 24px; }
 .b-edu, .b-award, .b-now { grid-column: span 4; display: flex; flex-direction: column; gap: 2px; font-size: 0.9rem; }
 .b-edu strong, .b-award strong, .b-now strong { font-family: var(--serif); font-weight: 400; font-size: 1.4rem; line-height: 1.2; margin: 8px 0 4px; }
 .b-now { cursor: pointer; }
+.b-now .live { background: var(--accent); }
 .b-now__link { margin-top: auto; padding-top: 12px; font-size: 0.82rem; font-weight: 600; color: var(--accent); }
 
 /* ---------- Sections ---------- */
@@ -218,7 +218,7 @@ main { max-width: 1200px; margin: 0 auto; padding: 24px; }
 .xskills__group .chips span { font-family: var(--sans); font-size: 0.78rem; color: var(--text); }
 .tl__link { margin-left: 12px; font-size: 0.85rem; font-weight: 600; color: var(--accent); border-bottom: 1px solid currentColor; }
 
-/* contact: one wide diagonal band, gold to green */
+/* contact: one wide diagonal band */
 .contact { position: relative; isolation: isolate; }
 .stripes { position: absolute; z-index: -1; left: 50%; bottom: 0; width: 100vw; height: 500px; transform: translateX(-50%); pointer-events: none;
   -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 40%); mask-image: linear-gradient(to bottom, transparent 0, #000 40%); }
@@ -249,7 +249,7 @@ main { max-width: 1200px; margin: 0 auto; padding: 24px; }
 .pdf-modal__close:hover { color: var(--text); }
 .pdf-modal__actions { display: flex; gap: 8px; padding: 12px 24px 16px; }
 .pdf-modal__actions a { display: inline-flex; gap: 8px; align-items: center; font-size: 0.82rem; font-weight: 600; padding: 7px 14px; border-radius: 8px; border: 1px solid var(--line-strong); }
-.pdf-modal__actions a:first-child { background: var(--accent, var(--primary)); border-color: var(--accent, var(--primary)); color: #03131d; }
+.pdf-modal__actions a:first-child { background: var(--accent, var(--primary)); border-color: var(--accent, var(--primary)); color: var(--ink, #03131d); }
 .pdf-modal__frame { flex: 1; border: 0; background: #2a2a2e; }
 
 /* ---------- Motion ---------- */
@@ -258,6 +258,14 @@ main { max-width: 1200px; margin: 0 auto; padding: 24px; }
 @keyframes fromRight { from { opacity: 0; transform: translateX(56px); } }
 @keyframes fade { from { opacity: 0; } }
 @keyframes live { 50% { opacity: 0.35; } }
+@media (hover: none) { .skillfloat { display: none; } }
+@media (max-width: 400px) {
+  .top__inner { padding: 10px 12px; gap: 6px; }
+  .logo { font-size: 0.95rem; }
+  .links { gap: 4px; }
+  .top .links a { width: 30px; height: 30px; }
+  .top .btn--primary { padding: 7px 11px; font-size: 0.8rem; }
+}
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
 
 /* ---------- Responsive ---------- */
@@ -278,6 +286,7 @@ main { max-width: 1200px; margin: 0 auto; padding: 24px; }
   .pbar { gap: 16px; }
   .pbar .skillbar { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
   .pbar .skillbar span { flex-shrink: 0; }
+  .pbar .skillbar { -webkit-mask-image: linear-gradient(90deg, #000 80%, transparent); mask-image: linear-gradient(90deg, #000 80%, transparent); padding-right: 32px; }
   .xbar { margin-left: 15%; }
   .xgrid { grid-template-columns: 1fr; gap: 32px; }
   .xskills { position: static; grid-template-columns: 1fr 1fr; }

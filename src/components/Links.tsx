@@ -3,10 +3,10 @@ import { FaLinkedin, FaGithub, FaInstagram, FaCode } from 'react-icons/fa';
 import { ACCENTS, profile } from '../data/content';
 
 const items = [
-  { href: profile.links.linkedin, label: 'LinkedIn', Icon: FaLinkedin, accent: ACCENTS.blue },
-  { href: profile.links.github, label: 'GitHub', Icon: FaGithub, accent: ACCENTS.green },
-  { href: profile.links.leetcode, label: 'LeetCode', Icon: FaCode, accent: ACCENTS.gold },
-  { href: profile.links.instagram, label: 'Instagram', Icon: FaInstagram, accent: ACCENTS.red },
+  { href: profile.links.linkedin, label: 'LinkedIn', Icon: FaLinkedin, accent: ACCENTS.red },
+  { href: profile.links.github, label: 'GitHub', Icon: FaGithub, accent: ACCENTS.gold },
+  { href: profile.links.leetcode, label: 'LeetCode', Icon: FaCode, accent: ACCENTS.blue },
+  { href: profile.links.instagram, label: 'Instagram', Icon: FaInstagram, accent: ACCENTS.blue },
 ];
 
 export default function Links({ size = 22 }: { size?: number }) {

@@ -13,7 +13,7 @@ const SECTIONS = [
   { id: 'about', label: 'About', accent: ACCENTS.blue },
   { id: 'projects', label: 'Projects', accent: ACCENTS.gold },
   { id: 'experience', label: 'Experience', accent: ACCENTS.red },
-  { id: 'contact', label: 'Contact', accent: ACCENTS.green },
+  { id: 'contact', label: 'Contact', accent: ACCENTS.red },
 ];
 const SECTION_IDS = SECTIONS.map(s => s.id);
 const go = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
@@ -27,7 +27,7 @@ function Tile({ accent, className = '', children, style, ...rest }: React.HTMLAt
     ref.current!.style.setProperty('--my', `${e.clientY - r.top}px`);
   };
   return (
-    <div ref={ref} onMouseMove={onMove} className={`tile ${className}`} style={{ '--accent': accent ?? ACCENTS.green, ...style } as React.CSSProperties} {...rest}>
+    <div ref={ref} onMouseMove={onMove} className={`tile ${className}`} style={{ '--accent': accent ?? ACCENTS.blue, ...style } as React.CSSProperties} {...rest}>
       {children}
     </div>
   );
@@ -120,7 +120,7 @@ function ProjectCard({ p, hl, onHover }: { p: Project; hl: string | null; onHove
       <Tile accent={ACCENTS[p.accent]} className="proj__tile">
         <div className="proj__row">
           <span className="proj__dot" />
-          {p.award ? <span className="proj__award">{p.award}</span> : p.metric && <span className="proj__metric">{p.metric}</span>}
+          {p.award ? <span className="proj__award" style={{ '--accent': ACCENTS.blue } as React.CSSProperties}>{p.award}</span> : p.metric && <span className="proj__metric">{p.metric}</span>}
         </div>
         <h3>{p.name}</h3>
         <p className="proj__blurb">{p.blurb}</p>
@@ -239,12 +239,12 @@ function Experience({ onPdf }: { onPdf: () => void }) {
 function Contact({ onResume }: { onResume: () => void }) {
   const [ref, inView] = useInView<HTMLElement>(0.15);
   return (
-    <section id="contact" ref={ref} className={`sec contact reveal ${inView ? 'is-in' : ''}`} style={{ '--accent': ACCENTS.green, '--primary': ACCENTS.green } as React.CSSProperties}>
+    <section id="contact" ref={ref} className={`sec contact reveal ${inView ? 'is-in' : ''}`} style={{ '--accent': ACCENTS.red, '--primary': ACCENTS.red, '--ink': '#fff' } as React.CSSProperties}>
       <svg className="stripes" viewBox="0 -160 1440 680" preserveAspectRatio="none" aria-hidden>
         <defs>
           <linearGradient id="band" x1="0" x2="1" y1="0" y2="0">
-            <stop offset="0" stopColor={ACCENTS.green} />
-            <stop offset="1" stopColor={ACCENTS.green} stopOpacity="0.55" />
+            <stop offset="0" stopColor={ACCENTS.red} />
+            <stop offset="1" stopColor={ACCENTS.red} stopOpacity="0.55" />
           </linearGradient>
         </defs>
         <g className="stripes__band">
@@ -286,7 +286,7 @@ export default function App() {
     { id: 'gh', label: 'GitHub', hint: 'link', accent: ACCENTS.blue, run: () => window.open(profile.links.github, '_blank') },
     { id: 'li', label: 'LinkedIn', hint: 'link', accent: ACCENTS.blue, run: () => window.open(profile.links.linkedin, '_blank') },
     { id: 'lc', label: 'LeetCode', hint: 'link', accent: ACCENTS.gold, run: () => window.open(profile.links.leetcode, '_blank') },
-    { id: 'research', label: 'DSU research abstract', hint: 'PDF', accent: ACCENTS.green, run: () => setModal('research') },
+    { id: 'research', label: 'DSU research abstract', hint: 'PDF', accent: ACCENTS.red, run: () => setModal('research') },
   ], []);
 
   return (
@@ -300,7 +300,7 @@ export default function App() {
       </main>
       <CommandPalette open={palette} onClose={() => setPalette(false)} commands={commands} />
       <PdfModal open={modal === 'resume'} onClose={() => setModal(null)} title="Paul Edelman, Resume" subtitle="Fall 2026" src={RESUME_PDF} downloadName="Edelman Resume.pdf" accent={ACCENTS.blue} />
-      <PdfModal open={modal === 'research'} onClose={() => setModal(null)} title={research.title} subtitle="Delaware State University · 2022 – 2023" src={research.pdf} downloadName="Edelman - Air-quality Maps Abstract.pdf" accent={ACCENTS.green} />
+      <PdfModal open={modal === 'research'} onClose={() => setModal(null)} title={research.title} subtitle="Delaware State University · 2022 – 2023" src={research.pdf} downloadName="Edelman - Air-quality Maps Abstract.pdf" accent={ACCENTS.red} ink="#fff" />
     </div>
   );
 }

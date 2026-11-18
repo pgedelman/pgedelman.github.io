@@ -9,11 +9,12 @@ interface Props {
   src: string;
   downloadName?: string;
   accent?: string;
+  ink?: string;
   children?: React.ReactNode;
 }
 
 /** Full-screen PDF viewer with download / open-in-new-tab, closes on Esc or backdrop click. */
-export default function PdfModal({ open, onClose, title, subtitle, src, downloadName, accent, children }: Props) {
+export default function PdfModal({ open, onClose, title, subtitle, src, downloadName, accent, ink, children }: Props) {
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
@@ -32,7 +33,7 @@ export default function PdfModal({ open, onClose, title, subtitle, src, download
     <div className="pdf-modal" onClick={onClose} role="dialog" aria-modal="true" aria-label={title}>
       <div
         className="pdf-modal__panel"
-        style={{ '--accent': accent } as React.CSSProperties}
+        style={{ '--accent': accent, '--ink': ink } as React.CSSProperties}
         onClick={e => e.stopPropagation()}
       >
         <header className="pdf-modal__head">

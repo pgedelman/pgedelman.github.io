@@ -1,12 +1,14 @@
 // Single source of truth for site content. Every design reads from here.
 
-export type Accent = 'gold' | 'blue' | 'red' | 'green';
+// Color meaning: blue = me (identity, education, honors, personal links)
+//                gold = things I built (projects, tools)
+//                red  = work and hiring (roles, results at jobs, contact)
+export type Accent = 'gold' | 'blue' | 'red';
 
 export const ACCENTS: Record<Accent, string> = {
   gold: 'rgb(240, 173, 59)',
   blue: '#2da3df',
   red: 'rgb(189, 67, 67)',
-  green: 'rgb(54, 206, 100)',
 };
 
 export const RESUME_PDF = '/assets/Edelman Resume F2026.pdf';
@@ -43,21 +45,21 @@ export interface Stat {
 }
 
 export const stats: Stat[] = [
-  { value: 90, suffix: '%', label: 'faster deploys', accent: 'gold', source: 'DELJIS' },
-  { value: 40, suffix: '%', label: 'lower query latency', accent: 'blue', source: 'AirGreen' },
-  { value: 300, suffix: '+', label: 'LeetCode problems', accent: 'red', source: 'LeetCode' },
-  { value: 100, prefix: '<', suffix: 'ms', label: 'real-time sync latency', accent: 'green', source: 'Whiteboard' },
+  { value: 90, suffix: '%', label: 'faster deploys', accent: 'red', source: 'DELJIS' },
+  { value: 40, suffix: '%', label: 'lower query latency', accent: 'red', source: 'AirGreen' },
+  { value: 300, suffix: '+', label: 'LeetCode problems', accent: 'blue', source: 'LeetCode' },
+  { value: 100, prefix: '<', suffix: 'ms', label: 'real-time sync latency', accent: 'gold', source: 'Whiteboard' },
 ];
 
 /** Short brag badges, used in hero strips, tickers and the terminal. */
 export const badges: { text: string; accent: Accent }[] = [
-  { text: '2nd place · HenHacks', accent: 'green' },
+  { text: '2nd place · HenHacks', accent: 'gold' },
   { text: 'Raft consensus from scratch', accent: 'blue' },
   { text: 'Honors · 3.7 GPA', accent: 'red' },
   { text: '−90% deploy time at DELJIS', accent: 'gold' },
   { text: '−40% query latency at AirGreen', accent: 'blue' },
   { text: '300+ LeetCode problems', accent: 'red' },
-  { text: 'Container runtime in raw C syscalls', accent: 'green' },
+  { text: 'Container runtime in raw C syscalls', accent: 'gold' },
 ];
 
 export interface Experience {
@@ -104,7 +106,7 @@ export const experiences: Experience[] = [
     place: 'New Castle, DE',
     dates: 'May 2025 – Sep 2025',
     year: 2025,
-    accent: 'blue',
+    accent: 'red',
     kind: 'work',
     highlight: 'Reduced query latency 40% on high-volume IoT analytics',
     bullets: [
@@ -122,7 +124,7 @@ export const experiences: Experience[] = [
     place: 'Newark, DE',
     dates: 'Aug 2024 – May 2025',
     year: 2024,
-    accent: 'gold',
+    accent: 'red',
     kind: 'teaching',
     highlight: 'Taught data structures, algorithms & debugging to CS students',
     bullets: [
@@ -139,7 +141,7 @@ export const experiences: Experience[] = [
     place: 'Dover, DE',
     dates: '2022 – 2023',
     year: 2022,
-    accent: 'green',
+    accent: 'red',
     kind: 'research',
     highlight: 'Built Raspberry Pi air-quality sensors for a DoD/NSF-funded study',
     bullets: [
@@ -218,7 +220,7 @@ export const projects: Project[] = [
     description:
       'A spending-to-carbon tracker that connects to your bank through Plaid, scores every transaction by carbon impact, and rewards greener choices. Built the React/Vite frontend, Express backend, and the Plaid integration.',
     skills: ['React', 'Express', 'Plaid API', 'Tailwind CSS'],
-    accent: 'green',
+    accent: 'gold',
     award: '2nd place · HenHacks',
   },
   {
@@ -228,7 +230,7 @@ export const projects: Project[] = [
     description:
       'A container runtime built from scratch in C: chroot sandboxing, Linux namespaces, rootless UID/GID mapping, and cgroups v2 resource limits, directly on raw syscalls. No libcontainer, no runc.',
     skills: ['C', 'Linux', 'Namespaces', 'cgroups'],
-    accent: 'red',
+    accent: 'gold',
     metric: 'Raw syscalls only',
   },
   {
@@ -238,7 +240,7 @@ export const projects: Project[] = [
     description:
       'React frontend and Node/Express backend synced over WebSockets so many people can draw on the same canvas with sub-100ms latency. MongoDB keeps state consistent across sessions; optimistic UI keeps drawing instant.',
     skills: ['React', 'Socket.io', 'Node.js', 'MongoDB'],
-    accent: 'blue',
+    accent: 'gold',
     metric: '<100ms sync',
   },
   {
@@ -258,13 +260,13 @@ export const projects: Project[] = [
     description:
       'A block-puzzle game with a JavaScript front end and Python/Flask backend. Smash-Bot is a PyTorch model trained to play it, learning patterns that lead to high scores.',
     skills: ['JavaScript', 'Python', 'Flask', 'PyTorch'],
-    accent: 'blue',
+    accent: 'gold',
   },
 ];
 
 export const skillGroups: { label: string; accent: Accent; items: string[] }[] = [
   { label: 'Languages', accent: 'gold', items: ['Python', 'JavaScript', 'C#', 'Go', 'C/C++', 'Java', 'SQL'] },
-  { label: 'Systems', accent: 'blue', items: ['Linux', 'Podman', 'Docker', 'systemd', 'Kubernetes', 'Raft', 'GitLab CI/CD'] },
-  { label: 'Web', accent: 'red', items: ['React', 'Node.js', 'Express', 'REST', 'WebSockets'] },
-  { label: 'Data & ML', accent: 'green', items: ['PostgreSQL', 'MySQL', 'MongoDB', 'TensorFlow', 'PyTorch', 'pandas'] },
+  { label: 'Systems', accent: 'gold', items: ['Linux', 'Podman', 'Docker', 'systemd', 'Kubernetes', 'Raft', 'GitLab CI/CD'] },
+  { label: 'Web', accent: 'gold', items: ['React', 'Node.js', 'Express', 'REST', 'WebSockets'] },
+  { label: 'Data & ML', accent: 'gold', items: ['PostgreSQL', 'MySQL', 'MongoDB', 'TensorFlow', 'PyTorch', 'pandas'] },
 ];
