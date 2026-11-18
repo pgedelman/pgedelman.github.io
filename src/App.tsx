@@ -104,7 +104,7 @@ function Bento({ onResume }: { onResume: () => void }) {
         <span className="muted">Raft consensus from scratch, in Go</span>
         <span className="b-now__link">View repository ↗</span>
       </Tile>
-      <Tile accent={ACCENTS.red} className="b-award edge edge--right">
+      <Tile accent={ACCENTS.blue} className="b-award edge edge--right">
         <span className="label">Award</span>
         <strong>2nd place, HenHacks</strong>
         <span className="b-award__sub">FootPrint, a spending-to-carbon tracker built on Plaid</span>
@@ -114,15 +114,15 @@ function Bento({ onResume }: { onResume: () => void }) {
 }
 
 const GROUPS: { name: string; blurb: string; accent: string; side: 'left' | 'right'; items: string[] }[] = [
-  { name: 'Systems', blurb: 'Consensus, containers, and the layer under the framework.', accent: ACCENTS.blue, side: 'left', items: ['Ticker', 'minictl'] },
+  { name: 'Systems', blurb: 'Consensus, containers, and the layer under the framework.', accent: ACCENTS.gold, side: 'left', items: ['Ticker', 'minictl'] },
   { name: 'Full-stack', blurb: 'Real-time apps, from the database to the UI.', accent: ACCENTS.green, side: 'right', items: ['FootPrint', 'Collaborative Whiteboard'] },
-  { name: 'Data & ML', blurb: 'Pipelines from raw data to trained models.', accent: ACCENTS.gold, side: 'left', items: ['PredictSports', 'Block-Smash'] },
+  { name: 'Data & ML', blurb: 'Pipelines from raw data to trained models.', accent: ACCENTS.blue, side: 'left', items: ['PredictSports', 'Block-Smash'] },
 ];
 
-function ProjectCard({ p, hl, accent }: { p: Project; hl: string | null; accent: string }) {
+function ProjectCard({ p, hl, accent, onHover }: { p: Project; hl: string | null; accent: string; onHover: (p: Project | null) => void }) {
   const dim = !!hl && !p.skills.includes(hl);
   return (
-    <a href={p.link} target="_blank" rel="noreferrer" className={`proj ${dim ? 'is-dim' : ''} ${hl && !dim ? 'is-lit' : ''}`}>
+    <a href={p.link} target="_blank" rel="noreferrer" className={`proj ${dim ? 'is-dim' : ''} ${hl && !dim ? 'is-lit' : ''}`} onMouseEnter={() => onHover(p)} onMouseLeave={() => onHover(null)} onFocus={() => onHover(p)} onBlur={() => onHover(null)}>
       <Tile accent={accent} className="proj__tile">
         <div className="proj__row">
           <span className="proj__dot" />
@@ -141,6 +141,7 @@ function ProjectCard({ p, hl, accent }: { p: Project; hl: string | null; accent:
 function Projects() {
   const allSkills = useMemo(() => Array.from(new Set(projects.flatMap(p => p.skills))).sort(), []);
   const [hl, setHl] = useState<string | null>(null);
+  const [hoverP, setHoverP] = useState<Project | null>(null);
   const [ref, inView] = useInView<HTMLElement>(0.05);
   return (
     <section id="projects" ref={ref} className={`sec reveal ${inView ? 'is-in' : ''}`} style={{ '--accent': ACCENTS.gold } as React.CSSProperties}>
@@ -148,9 +149,16 @@ function Projects() {
         <h2>Projects</h2>
         <p className="muted">Grouped by what they're about. Hover a skill to see where I used it.</p>
       </div>
-      <div className="skillbar">
+      <div className="skillbar skillbar--sticky">
+        <span className="skillbar__label">{hoverP ? hoverP.name : hl ? 'Filtering' : 'Skills'}</span>
         {allSkills.map(s => (
-          <span key={s} onMouseEnter={() => setHl(s)} onMouseLeave={() => setHl(null)} onClick={() => setHl(h => (h === s ? null : s))} className={hl === s ? 'is-on' : ''}>{s}</span>
+          <span
+            key={s}
+            onMouseEnter={() => setHl(s)}
+            onMouseLeave={() => setHl(null)}
+            onClick={() => setHl(h => (h === s ? null : s))}
+            className={`${hl === s ? 'is-on' : ''} ${hoverP?.skills.includes(s) ? 'is-assoc' : ''} ${hoverP && !hoverP.skills.includes(s) ? 'is-faded' : ''}`}
+          >{s}</span>
         ))}
       </div>
       <div className="groups">
@@ -165,7 +173,7 @@ function Projects() {
                 <p>{g.blurb}</p>
                 <span className="group__count">{hl ? `${hits} of ${items.length} use ${hl}` : `${items.length} projects`}</span>
               </div>
-              {items.map(p => <ProjectCard key={p.name} p={p} hl={hl} accent={g.accent} />)}
+              {items.map(p => <ProjectCard key={p.name} p={p} hl={hl} accent={g.accent} onHover={setHoverP} />)}
             </div>
           );
         })}
@@ -179,7 +187,15 @@ const MAJOR = ['deljis', 'airgreen'];
 function MinorRole({ e, onPdf }: { e: Exp; onPdf: () => void }) {
   const [open, setOpen] = useState(false);
   return (
-    <Tile accent={ACCENTS[e.accent]} className={`minor ${open ? 'is-open' : ''}`}>
+    <Tile
+      accent={ACCENTS[e.accent]}
+      className={`minor ${open ? 'is-open' : ''}`}
+      role="button"
+      tabIndex={0}
+      aria-expanded={open}
+      onClick={() => setOpen(o => !o)}
+      onKeyDown={ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); setOpen(o => !o); } }}
+    >
       <span className="label">{e.dates}</span>
       <h4>{e.role}</h4>
       <p className="minor__org">{e.org}</p>
@@ -189,7 +205,7 @@ function MinorRole({ e, onPdf }: { e: Exp; onPdf: () => void }) {
           <ul>{e.bullets.map((b, i) => <li key={i}>{b}</li>)}</ul>
           <div className="chips">{e.skills.map(s => <span key={s}>{s}</span>)}</div>
           {e.links && (
-            <div className="row">
+            <div className="row" onClick={ev => ev.stopPropagation()}>
               {e.links.map(l => e.pdf
                 ? <button key={l.href} className="btn btn--ghost" onClick={onPdf}>{l.label}</button>
                 : <a key={l.href} className="btn btn--ghost" href={l.href} target="_blank" rel="noreferrer">{l.label} ↗</a>)}
@@ -197,7 +213,7 @@ function MinorRole({ e, onPdf }: { e: Exp; onPdf: () => void }) {
           )}
         </div>
       </div>
-      <button className="minor__toggle" onClick={() => setOpen(o => !o)} aria-expanded={open}>{open ? 'Show less' : 'Details'} <span>{open ? '−' : '+'}</span></button>
+      <span className="minor__toggle">{open ? 'Show less' : 'Details'} <span>{open ? '−' : '+'}</span></span>
     </Tile>
   );
 }
@@ -212,15 +228,28 @@ function Experience({ onPdf }: { onPdf: () => void }) {
         <h2>Experience</h2>
         <p className="muted">Industry roles first; teaching, research and practice below.</p>
       </div>
-      <div className="xrows">
-        {major.map((e, i) => {
-          const side = i % 2 === 0 ? 'left' : 'right';
-          return (
-            <div key={e.id} className={`xrow xrow--${side}`}>
-              <div className={`edge edge--${side} xrow__head`} style={{ '--accent': ACCENTS[e.accent] } as React.CSSProperties}>
-                <span className="label">{e.dates} · {e.place}</span>
-                <h3>{e.org}</h3>
-                <p className="xrow__role">{e.role}</p>
+      <div className="xlayout">
+        <aside className="edge edge--left xskills">
+          <div className="xskills__inner">
+            <span className="label">Toolbox</span>
+            <h3>Skills</h3>
+            {skillGroups.map(g => (
+              <div key={g.label} className="xskills__group" style={{ '--accent': ACCENTS[g.accent] } as React.CSSProperties}>
+                <h4>{g.label}</h4>
+                <div className="chips">{g.items.map(i => <span key={i}>{i}</span>)}</div>
+              </div>
+            ))}
+          </div>
+        </aside>
+        <div className="xmain">
+          {major.map(e => (
+            <div key={e.id} className="xrow" style={{ '--accent': ACCENTS[e.accent] } as React.CSSProperties}>
+              <div className="edge edge--right xrow__head" style={{ '--accent': ACCENTS[e.accent] } as React.CSSProperties}>
+                <div>
+                  <span className="label">{e.dates} · {e.place}</span>
+                  <h3>{e.org}</h3>
+                  <p className="xrow__role">{e.role}</p>
+                </div>
                 <p className="xrow__win">{e.highlight}</p>
               </div>
               <Tile accent={ACCENTS[e.accent]} className="xrow__body">
@@ -228,19 +257,11 @@ function Experience({ onPdf }: { onPdf: () => void }) {
                 <div className="chips">{e.skills.map(s => <span key={s}>{s}</span>)}</div>
               </Tile>
             </div>
-          );
-        })}
-      </div>
-      <div className="minors">
-        {minor.map(e => <MinorRole key={e.id} e={e} onPdf={onPdf} />)}
-      </div>
-      <div className="sgrid">
-        {skillGroups.map(g => (
-          <Tile key={g.label} accent={ACCENTS[g.accent]} className="sgrid__tile">
-            <h4>{g.label}</h4>
-            <div className="chips">{g.items.map(i => <span key={i}>{i}</span>)}</div>
-          </Tile>
-        ))}
+          ))}
+          <div className="minors">
+            {minor.map(e => <MinorRole key={e.id} e={e} onPdf={onPdf} />)}
+          </div>
+        </div>
       </div>
     </section>
   );

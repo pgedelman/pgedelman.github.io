@@ -46,7 +46,7 @@ export const stats: Stat[] = [
   { value: 90, suffix: '%', label: 'faster deploys', accent: 'gold', source: 'DELJIS' },
   { value: 40, suffix: '%', label: 'lower query latency', accent: 'blue', source: 'AirGreen' },
   { value: 300, suffix: '+', label: 'LeetCode problems', accent: 'red', source: 'LeetCode' },
-  { value: 2, suffix: 'nd', label: 'place at HenHacks', accent: 'green', source: 'FootPrint' },
+  { value: 100, prefix: '<', suffix: 'ms', label: 'real-time sync latency', accent: 'green', source: 'Whiteboard' },
 ];
 
 /** Short brag badges, used in hero strips, tickers and the terminal. */
@@ -85,7 +85,7 @@ export const experiences: Experience[] = [
     place: 'Dover, DE',
     dates: 'Jun 2026 – Aug 2026',
     year: 2026,
-    accent: 'gold',
+    accent: 'red',
     kind: 'work',
     highlight: 'Cut deployment time ~90% with a Kubernetes-inspired orchestrator',
     bullets: [
@@ -122,7 +122,7 @@ export const experiences: Experience[] = [
     place: 'Newark, DE',
     dates: 'Aug 2024 – May 2025',
     year: 2024,
-    accent: 'red',
+    accent: 'gold',
     kind: 'teaching',
     highlight: 'Taught data structures, algorithms & debugging to CS students',
     bullets: [
@@ -158,7 +158,7 @@ export const experiences: Experience[] = [
     place: 'Online',
     dates: '2022 – Present',
     year: 2022,
-    accent: 'red',
+    accent: 'blue',
     kind: 'practice',
     highlight: '300+ problems solved in C++, weekly contests',
     bullets: [
