@@ -10,10 +10,10 @@ import {
 import { useActiveSection, useCountUp, useInView } from './hooks';
 
 const SECTIONS = [
-  { id: 'about', label: 'About', accent: ACCENTS.green },
-  { id: 'projects', label: 'Projects', accent: ACCENTS.blue },
+  { id: 'about', label: 'About', accent: ACCENTS.blue },
+  { id: 'projects', label: 'Projects', accent: ACCENTS.gold },
   { id: 'experience', label: 'Experience', accent: ACCENTS.red },
-  { id: 'contact', label: 'Contact', accent: ACCENTS.gold },
+  { id: 'contact', label: 'Contact', accent: ACCENTS.green },
 ];
 const SECTION_IDS = SECTIONS.map(s => s.id);
 const go = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
@@ -74,7 +74,7 @@ function Bento({ onResume }: { onResume: () => void }) {
   const [ref, inView] = useInView<HTMLDivElement>(0.15);
   return (
     <section id="about" className="bento" ref={ref}>
-      <Tile accent={ACCENTS.green} className="b-intro edge edge--left">
+      <Tile accent={ACCENTS.blue} className="b-intro edge edge--left">
         <span className="label">Software Engineer · Class of 2027</span>
         <h1>Paul Edelman</h1>
         <p className="b-intro__tag">I build the layer under the framework: consensus, containers, and data pipelines.</p>
@@ -119,11 +119,11 @@ const GROUPS: { name: string; blurb: string; accent: string; side: 'left' | 'rig
   { name: 'Data & ML', blurb: 'Pipelines from raw data to trained models.', accent: ACCENTS.gold, side: 'left', items: ['PredictSports', 'Block-Smash'] },
 ];
 
-function ProjectCard({ p, hl }: { p: Project; hl: string | null }) {
+function ProjectCard({ p, hl, accent }: { p: Project; hl: string | null; accent: string }) {
   const dim = !!hl && !p.skills.includes(hl);
   return (
     <a href={p.link} target="_blank" rel="noreferrer" className={`proj ${dim ? 'is-dim' : ''} ${hl && !dim ? 'is-lit' : ''}`}>
-      <Tile accent={ACCENTS[p.accent]} className="proj__tile">
+      <Tile accent={accent} className="proj__tile">
         <div className="proj__row">
           <span className="proj__dot" />
           {p.award ? <span className="proj__award">{p.award}</span> : p.metric && <span className="proj__metric">{p.metric}</span>}
@@ -143,7 +143,7 @@ function Projects() {
   const [hl, setHl] = useState<string | null>(null);
   const [ref, inView] = useInView<HTMLElement>(0.05);
   return (
-    <section id="projects" ref={ref} className={`sec reveal ${inView ? 'is-in' : ''}`} style={{ '--accent': ACCENTS.blue } as React.CSSProperties}>
+    <section id="projects" ref={ref} className={`sec reveal ${inView ? 'is-in' : ''}`} style={{ '--accent': ACCENTS.gold } as React.CSSProperties}>
       <div className="sec__head">
         <h2>Projects</h2>
         <p className="muted">Grouped by what they're about. Hover a skill to see where I used it.</p>
@@ -165,7 +165,7 @@ function Projects() {
                 <p>{g.blurb}</p>
                 <span className="group__count">{hl ? `${hits} of ${items.length} use ${hl}` : `${items.length} projects`}</span>
               </div>
-              {items.map(p => <ProjectCard key={p.name} p={p} hl={hl} />)}
+              {items.map(p => <ProjectCard key={p.name} p={p} hl={hl} accent={g.accent} />)}
             </div>
           );
         })}
@@ -249,12 +249,12 @@ function Experience({ onPdf }: { onPdf: () => void }) {
 function Contact({ onResume }: { onResume: () => void }) {
   const [ref, inView] = useInView<HTMLElement>(0.15);
   return (
-    <section id="contact" ref={ref} className={`sec contact reveal ${inView ? 'is-in' : ''}`}>
+    <section id="contact" ref={ref} className={`sec contact reveal ${inView ? 'is-in' : ''}`} style={{ '--accent': ACCENTS.green, '--primary': ACCENTS.green } as React.CSSProperties}>
       <svg className="stripes" viewBox="0 -160 1440 680" preserveAspectRatio="none" aria-hidden>
         <defs>
           <linearGradient id="band" x1="0" x2="1" y1="0" y2="0">
-            <stop offset="0" stopColor={ACCENTS.gold} />
-            <stop offset="1" stopColor={ACCENTS.green} />
+            <stop offset="0" stopColor={ACCENTS.green} />
+            <stop offset="1" stopColor={ACCENTS.green} stopOpacity="0.55" />
           </linearGradient>
         </defs>
         <g className="stripes__band">
@@ -292,7 +292,7 @@ export default function App() {
 
   const commands: Command[] = useMemo(() => [
     ...SECTIONS.map(s => ({ id: s.id, label: s.label, hint: 'section', accent: s.accent, run: () => go(s.id) })),
-    { id: 'resume', label: 'Open resume', hint: 'PDF', accent: ACCENTS.green, run: () => setModal('resume') },
+    { id: 'resume', label: 'Open resume', hint: 'PDF', accent: ACCENTS.blue, run: () => setModal('resume') },
     ...projects.map(p => ({ id: p.name, label: p.name, hint: `project · ${p.blurb}`, accent: ACCENTS[p.accent], run: () => window.open(p.link, '_blank') })),
     { id: 'gh', label: 'GitHub', hint: 'link', accent: ACCENTS.blue, run: () => window.open(profile.links.github, '_blank') },
     { id: 'li', label: 'LinkedIn', hint: 'link', accent: ACCENTS.blue, run: () => window.open(profile.links.linkedin, '_blank') },
@@ -310,7 +310,7 @@ export default function App() {
         <Contact onResume={() => setModal('resume')} />
       </main>
       <CommandPalette open={palette} onClose={() => setPalette(false)} commands={commands} />
-      <PdfModal open={modal === 'resume'} onClose={() => setModal(null)} title="Paul Edelman, Resume" subtitle="Fall 2026" src={RESUME_PDF} downloadName="Edelman Resume.pdf" accent={ACCENTS.green} />
+      <PdfModal open={modal === 'resume'} onClose={() => setModal(null)} title="Paul Edelman, Resume" subtitle="Fall 2026" src={RESUME_PDF} downloadName="Edelman Resume.pdf" accent={ACCENTS.blue} />
       <PdfModal open={modal === 'research'} onClose={() => setModal(null)} title={research.title} subtitle="Delaware State University · 2022 – 2023" src={research.pdf} downloadName="Edelman - Air-quality Maps Abstract.pdf" accent={ACCENTS.green} />
     </div>
   );

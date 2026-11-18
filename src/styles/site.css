@@ -4,7 +4,7 @@
   --gold: rgb(240, 173, 59);
   --blue: #2da3df;
   --red: rgb(189, 67, 67);
-  --primary: var(--green);
+  --primary: var(--blue);
   --bg: #0a0a0b;
   --surface: #111113;
   --surface-2: #17171a;
@@ -48,7 +48,7 @@ main { max-width: 1200px; margin: 0 auto; padding: 24px; }
 
 /* ---------- Buttons ---------- */
 .btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; border-radius: 8px; font-size: 0.86rem; font-weight: 600; transition: background 0.2s, border-color 0.2s, color 0.2s; }
-.btn--primary { background: var(--primary); color: #04210e; }
+.btn--primary { background: var(--primary); color: #03131d; }
 .btn--primary:hover { background: color-mix(in srgb, var(--primary) 85%, #fff); }
 .btn--ghost { border: 1px solid var(--line-strong); }
 .btn--ghost:hover { border-color: var(--text); }
@@ -101,20 +101,20 @@ main { max-width: 1200px; margin: 0 auto; padding: 24px; }
 
 .chips { display: flex; flex-wrap: wrap; gap: 5px; }
 .chips span { font-family: var(--mono); font-size: 0.7rem; padding: 2px 8px; border-radius: 6px; border: 1px solid var(--line); color: var(--muted); transition: all 0.2s; }
-.chips span.is-on { color: var(--text); border-color: var(--primary); }
+.chips span.is-on { color: var(--text); border-color: var(--accent, var(--primary)); }
 
 .skillbar { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
 .skillbar span { font-size: 0.78rem; padding: 4px 11px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); cursor: pointer; transition: all 0.2s; }
-.skillbar span:hover, .skillbar span.is-on { color: var(--text); border-color: var(--primary); }
+.skillbar span:hover, .skillbar span.is-on { color: var(--text); border-color: var(--accent, var(--primary)); }
 
 .pgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
 .proj { display: block; transition: opacity 0.3s; }
 .proj.is-dim { opacity: 0.3; }
-.proj.is-lit .tile { border-color: color-mix(in srgb, var(--primary) 60%, transparent); }
+.proj.is-lit .tile { border-color: color-mix(in srgb, var(--accent) 60%, transparent); }
 .proj__tile { height: 100%; display: flex; flex-direction: column; gap: 4px; }
 .proj__row { display: flex; justify-content: space-between; align-items: center; min-height: 24px; }
 .proj__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
-.proj__award { font-size: 0.7rem; font-weight: 600; padding: 2px 9px; border-radius: 999px; border: 1px solid var(--primary); color: var(--primary); }
+.proj__award { font-size: 0.7rem; font-weight: 600; padding: 2px 9px; border-radius: 999px; border: 1px solid var(--accent); color: var(--accent); }
 .proj__metric { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); }
 .proj h3 { font-family: var(--serif); font-weight: 400; font-size: 1.55rem; line-height: 1.1; margin-top: 8px; transition: color 0.2s; }
 .proj:hover h3 { color: var(--accent); }
@@ -250,7 +250,7 @@ main { max-width: 1200px; margin: 0 auto; padding: 24px; }
 .pdf-modal__close:hover { color: var(--text); }
 .pdf-modal__actions { display: flex; gap: 8px; padding: 12px 24px 16px; }
 .pdf-modal__actions a { display: inline-flex; gap: 8px; align-items: center; font-size: 0.82rem; font-weight: 600; padding: 7px 14px; border-radius: 8px; border: 1px solid var(--line-strong); }
-.pdf-modal__actions a:first-child { background: var(--primary); border-color: var(--primary); color: #04210e; }
+.pdf-modal__actions a:first-child { background: var(--accent, var(--primary)); border-color: var(--accent, var(--primary)); color: #03131d; }
 .pdf-modal__frame { flex: 1; border: 0; background: #2a2a2e; }
 
 /* ---------- Motion ---------- */
