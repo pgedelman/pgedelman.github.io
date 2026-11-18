@@ -5,7 +5,7 @@ import PdfModal from './components/PdfModal';
 import Links from './components/Links';
 import CommandPalette, { Command } from './components/CommandPalette';
 import {
-  ACCENTS, RESUME_PDF, profile, stats, projects, experiences, research, skillGroups, Stat,
+  ACCENTS, RESUME_PDF, profile, stats, projects, experiences, research, skillGroups, Stat, Project, Experience as Exp,
 } from './data/content';
 import { useActiveSection, useCountUp, useInView } from './hooks';
 
@@ -98,112 +98,95 @@ function Bento({ onResume }: { onResume: () => void }) {
         <span>B.S. Computer Science · B.A. Applied Mathematics</span>
         <span className="muted">Honors · 3.7 GPA · May 2027</span>
       </Tile>
-      <Tile accent={ACCENTS.red} className="b-award">
-        <span className="label">Award</span>
-        <strong>2nd place, HenHacks</strong>
-        <span className="muted">FootPrint, a spending-to-carbon tracker built on Plaid</span>
-      </Tile>
       <Tile accent={ACCENTS.gold} className="b-now" onClick={() => window.open(projects[0].link, '_blank')} role="button" tabIndex={0}>
         <span className="label"><i className="live" /> Now building</span>
         <strong>Ticker</strong>
         <span className="muted">Raft consensus from scratch, in Go</span>
         <span className="b-now__link">View repository ↗</span>
       </Tile>
+      <Tile accent={ACCENTS.red} className="b-award edge edge--right">
+        <span className="label">Award</span>
+        <strong>2nd place, HenHacks</strong>
+        <span className="b-award__sub">FootPrint, a spending-to-carbon tracker built on Plaid</span>
+      </Tile>
     </section>
+  );
+}
+
+const GROUPS: { name: string; blurb: string; accent: string; side: 'left' | 'right'; items: string[] }[] = [
+  { name: 'Systems', blurb: 'Consensus, containers, and the layer under the framework.', accent: ACCENTS.blue, side: 'left', items: ['Ticker', 'minictl'] },
+  { name: 'Full-stack', blurb: 'Real-time apps, from the database to the UI.', accent: ACCENTS.green, side: 'right', items: ['FootPrint', 'Collaborative Whiteboard'] },
+  { name: 'Data & ML', blurb: 'Pipelines from raw data to trained models.', accent: ACCENTS.gold, side: 'left', items: ['PredictSports', 'Block-Smash'] },
+];
+
+function ProjectCard({ p, hl }: { p: Project; hl: string | null }) {
+  const dim = !!hl && !p.skills.includes(hl);
+  return (
+    <a href={p.link} target="_blank" rel="noreferrer" className={`proj ${dim ? 'is-dim' : ''} ${hl && !dim ? 'is-lit' : ''}`}>
+      <Tile accent={ACCENTS[p.accent]} className="proj__tile">
+        <div className="proj__row">
+          <span className="proj__dot" />
+          {p.award ? <span className="proj__award">{p.award}</span> : p.metric && <span className="proj__metric">{p.metric}</span>}
+        </div>
+        <h3>{p.name}</h3>
+        <p className="proj__blurb">{p.blurb}</p>
+        <p className="proj__desc">{p.description}</p>
+        <div className="chips">{p.skills.map(s => <span key={s} className={hl === s ? 'is-on' : ''}>{s}</span>)}</div>
+        <span className="proj__cta">View repository ↗</span>
+      </Tile>
+    </a>
   );
 }
 
 function Projects() {
   const allSkills = useMemo(() => Array.from(new Set(projects.flatMap(p => p.skills))).sort(), []);
   const [hl, setHl] = useState<string | null>(null);
-  const [ref, inView] = useInView<HTMLElement>(0.08);
+  const [ref, inView] = useInView<HTMLElement>(0.05);
   return (
     <section id="projects" ref={ref} className={`sec reveal ${inView ? 'is-in' : ''}`} style={{ '--accent': ACCENTS.blue } as React.CSSProperties}>
-      <div className="split">
-      <aside className="edge edge--right side">
-        <div className="side__sticky">
-          <span className="label">02 · Selected work</span>
-          <h2>Projects</h2>
-          <p className="muted">{projects.length} builds. Hover a skill to see where I used it.</p>
-          <div className="skillbar">
-            {allSkills.map(s => (
-              <span key={s} onMouseEnter={() => setHl(s)} onMouseLeave={() => setHl(null)} onClick={() => setHl(h => (h === s ? null : s))} className={hl === s ? 'is-on' : ''}>{s}</span>
-            ))}
-          </div>
-        </div>
-      </aside>
-      <div className="pgrid">
-        {projects.map(p => {
-          const dim = !!hl && !p.skills.includes(hl);
+      <div className="sec__head">
+        <h2>Projects</h2>
+        <p className="muted">Grouped by what they're about. Hover a skill to see where I used it.</p>
+      </div>
+      <div className="skillbar">
+        {allSkills.map(s => (
+          <span key={s} onMouseEnter={() => setHl(s)} onMouseLeave={() => setHl(null)} onClick={() => setHl(h => (h === s ? null : s))} className={hl === s ? 'is-on' : ''}>{s}</span>
+        ))}
+      </div>
+      <div className="groups">
+        {GROUPS.map((g, gi) => {
+          const items = g.items.map(n => projects.find(p => p.name === n)!).filter(Boolean);
+          const hits = hl ? items.filter(p => p.skills.includes(hl)).length : items.length;
           return (
-            <a key={p.name} href={p.link} target="_blank" rel="noreferrer" className={`proj ${dim ? 'is-dim' : ''} ${hl && !dim ? 'is-lit' : ''}`}>
-              <Tile accent={ACCENTS[p.accent]} className="proj__tile">
-                <div className="proj__row">
-                  <span className="proj__dot" />
-                  {p.award ? <span className="proj__award">{p.award}</span> : p.metric && <span className="proj__metric">{p.metric}</span>}
-                </div>
-                <h3>{p.name}</h3>
-                <p className="proj__blurb">{p.blurb}</p>
-                <p className="proj__desc">{p.description}</p>
-                <div className="chips">{p.skills.map(s => <span key={s} className={hl === s ? 'is-on' : ''}>{s}</span>)}</div>
-                <span className="proj__cta">View repository ↗</span>
-              </Tile>
-            </a>
+            <div key={g.name} className={`group group--${g.side}`} style={{ '--accent': g.accent, transitionDelay: `${gi * 120}ms` } as React.CSSProperties}>
+              <div className={`edge edge--${g.side} group__label`} style={{ '--accent': g.accent } as React.CSSProperties}>
+                <span className="label">0{gi + 1}</span>
+                <h3>{g.name}</h3>
+                <p>{g.blurb}</p>
+                <span className="group__count">{hl ? `${hits} of ${items.length} use ${hl}` : `${items.length} projects`}</span>
+              </div>
+              {items.map(p => <ProjectCard key={p.name} p={p} hl={hl} />)}
+            </div>
           );
         })}
-      </div>
       </div>
     </section>
   );
 }
 
-function Experience({ onPdf }: { onPdf: () => void }) {
-  const [active, setActive] = useState('deljis');
-  const [kbd, setKbd] = useState(false);
-  const listRef = useRef<HTMLDivElement>(null);
-  const e = experiences.find(x => x.id === active)!;
-  const onKey = (ev: React.KeyboardEvent) => {
-    const i = experiences.findIndex(x => x.id === active);
-    let n = -1;
-    if (ev.key === 'ArrowDown' || ev.key === 'ArrowRight') n = (i + 1) % experiences.length;
-    if (ev.key === 'ArrowUp' || ev.key === 'ArrowLeft') n = (i - 1 + experiences.length) % experiences.length;
-    if (n >= 0) { ev.preventDefault(); setKbd(true); setActive(experiences[n].id); }
-  };
-  useEffect(() => {
-    if (kbd) (listRef.current?.querySelector('.is-active') as HTMLElement | null)?.focus({ preventScroll: true });
-  }, [active, kbd]);
-  const [ref, inView] = useInView<HTMLElement>(0.08);
+const MAJOR = ['deljis', 'airgreen'];
+
+function MinorRole({ e, onPdf }: { e: Exp; onPdf: () => void }) {
+  const [open, setOpen] = useState(false);
   return (
-    <section id="experience" ref={ref} className={`sec reveal ${inView ? 'is-in' : ''}`} style={{ '--accent': ACCENTS.red } as React.CSSProperties}>
-      <div className="edge edge--left xpbox">
-      <div className="edge__tab">
-        <span className="label">03 · Where I've worked</span>
-        <h2>Experience</h2>
-      </div>
-      <p className="muted xpbox__hint">Click a role, or use ↑ ↓ to move between them.</p>
-      <div className="xp">
-        <div className="xp__list" role="tablist" aria-orientation="vertical" ref={listRef} onKeyDown={onKey}>
-          {experiences.map(x => (
-            <button
-              key={x.id}
-              role="tab"
-              aria-selected={x.id === active}
-              tabIndex={x.id === active ? 0 : -1}
-              className={x.id === active ? 'is-active' : ''}
-              style={{ '--accent': ACCENTS[x.accent] } as React.CSSProperties}
-              onClick={() => setActive(x.id)}
-            >
-              <strong>{x.org}</strong>
-              <span>{x.role}</span>
-              <em>{x.dates}</em>
-            </button>
-          ))}
-        </div>
-        <Tile accent={ACCENTS[e.accent]} className="xp__panel" key={e.id} role="tabpanel">
-          <span className="label">{e.dates} · {e.place}</span>
-          <h3>{e.role}, <span className="muted">{e.org}</span></h3>
-          <p className="xp__win" style={{ '--accent': ACCENTS[e.accent] } as React.CSSProperties}>{e.highlight}</p>
-          <ul>{e.bullets.map((b, i) => <li key={i} style={{ animationDelay: `${i * 50}ms` }}>{b}</li>)}</ul>
+    <Tile accent={ACCENTS[e.accent]} className={`minor ${open ? 'is-open' : ''}`}>
+      <span className="label">{e.dates}</span>
+      <h4>{e.role}</h4>
+      <p className="minor__org">{e.org}</p>
+      <p className="minor__win">{e.highlight}</p>
+      <div className="minor__body">
+        <div>
+          <ul>{e.bullets.map((b, i) => <li key={i}>{b}</li>)}</ul>
           <div className="chips">{e.skills.map(s => <span key={s}>{s}</span>)}</div>
           {e.links && (
             <div className="row">
@@ -212,8 +195,44 @@ function Experience({ onPdf }: { onPdf: () => void }) {
                 : <a key={l.href} className="btn btn--ghost" href={l.href} target="_blank" rel="noreferrer">{l.label} ↗</a>)}
             </div>
           )}
-        </Tile>
+        </div>
       </div>
+      <button className="minor__toggle" onClick={() => setOpen(o => !o)} aria-expanded={open}>{open ? 'Show less' : 'Details'} <span>{open ? '−' : '+'}</span></button>
+    </Tile>
+  );
+}
+
+function Experience({ onPdf }: { onPdf: () => void }) {
+  const [ref, inView] = useInView<HTMLElement>(0.05);
+  const major = experiences.filter(e => MAJOR.includes(e.id));
+  const minor = experiences.filter(e => !MAJOR.includes(e.id));
+  return (
+    <section id="experience" ref={ref} className={`sec reveal ${inView ? 'is-in' : ''}`} style={{ '--accent': ACCENTS.red } as React.CSSProperties}>
+      <div className="sec__head">
+        <h2>Experience</h2>
+        <p className="muted">Industry roles first; teaching, research and practice below.</p>
+      </div>
+      <div className="xrows">
+        {major.map((e, i) => {
+          const side = i % 2 === 0 ? 'left' : 'right';
+          return (
+            <div key={e.id} className={`xrow xrow--${side}`}>
+              <div className={`edge edge--${side} xrow__head`} style={{ '--accent': ACCENTS[e.accent] } as React.CSSProperties}>
+                <span className="label">{e.dates} · {e.place}</span>
+                <h3>{e.org}</h3>
+                <p className="xrow__role">{e.role}</p>
+                <p className="xrow__win">{e.highlight}</p>
+              </div>
+              <Tile accent={ACCENTS[e.accent]} className="xrow__body">
+                <ul>{e.bullets.map((b, j) => <li key={j}>{b}</li>)}</ul>
+                <div className="chips">{e.skills.map(s => <span key={s}>{s}</span>)}</div>
+              </Tile>
+            </div>
+          );
+        })}
+      </div>
+      <div className="minors">
+        {minor.map(e => <MinorRole key={e.id} e={e} onPdf={onPdf} />)}
       </div>
       <div className="sgrid">
         {skillGroups.map(g => (
@@ -232,14 +251,16 @@ function Contact({ onResume }: { onResume: () => void }) {
   return (
     <section id="contact" ref={ref} className={`sec contact reveal ${inView ? 'is-in' : ''}`}>
       <svg className="stripes" viewBox="0 -160 1440 680" preserveAspectRatio="none" aria-hidden>
-        <g className="stripes__a">
-          <polygon points="0,300 1008,-120 1416,-120 0,470" />
-          <line x1="0" y1="300" x2="1008" y2="-120" vectorEffect="non-scaling-stroke" />
-          <line x1="0" y1="470" x2="1416" y2="-120" vectorEffect="non-scaling-stroke" />
-        </g>
-        <g className="stripes__b">
-          <polygon points="560,520 1440,153 1440,520" />
-          <line x1="560" y1="520" x2="1440" y2="153" vectorEffect="non-scaling-stroke" />
+        <defs>
+          <linearGradient id="band" x1="0" x2="1" y1="0" y2="0">
+            <stop offset="0" stopColor={ACCENTS.gold} />
+            <stop offset="1" stopColor={ACCENTS.green} />
+          </linearGradient>
+        </defs>
+        <g className="stripes__band">
+          <polygon points="0,180 1440,-200 1440,240 0,620" fill="url(#band)" />
+          <line x1="0" y1="180" x2="1440" y2="-200" stroke="url(#band)" vectorEffect="non-scaling-stroke" />
+          <line x1="0" y1="620" x2="1440" y2="240" stroke="url(#band)" vectorEffect="non-scaling-stroke" />
         </g>
       </svg>
       <div className="cta">
