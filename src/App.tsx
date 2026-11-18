@@ -137,9 +137,22 @@ function Projects() {
   const [hl, setHl] = useState<string | null>(null);
   const [hoverP, setHoverP] = useState<Project | null>(null);
   const [ref, inView] = useInView<HTMLElement>(0.05);
+  // track whether the skill bar itself is on screen; if not, hovering a card shows a floating strip
+  const barRef = useRef<HTMLDivElement>(null);
+  const [barOnScreen, setBarOnScreen] = useState(true);
+  useEffect(() => {
+    const el = barRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([en]) => setBarOnScreen(en.isIntersecting), { rootMargin: '-64px 0px 0px 0px' });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+  const [lastP, setLastP] = useState<Project | null>(null);
+  useEffect(() => { if (hoverP) setLastP(hoverP); }, [hoverP]);
+  const floatOn = !!hoverP && !barOnScreen;
   return (
     <section id="projects" ref={ref} className={`sec reveal ${inView ? 'is-in' : ''}`} style={{ '--accent': ACCENTS.gold } as React.CSSProperties}>
-      <div className="edge edge--left pbar">
+      <div className="edge edge--left pbar" ref={barRef}>
         <h2>Projects</h2>
         <div className="skillbar">
           {allSkills.map(s => (
@@ -152,6 +165,14 @@ function Projects() {
             >{s}</span>
           ))}
         </div>
+      </div>
+      <div className={`skillfloat ${floatOn ? 'is-on' : ''}`} aria-hidden>
+        {lastP && (
+          <>
+            <b>{lastP.name}</b>
+            {lastP.skills.map(s => <span key={s}>{s}</span>)}
+          </>
+        )}
       </div>
       <div className="pgrid">
         {projects.map(p => <ProjectCard key={p.name} p={p} hl={hl} onHover={setHoverP} />)}
@@ -243,7 +264,6 @@ function Contact({ onResume }: { onResume: () => void }) {
         </div>
         <Links size={22} />
       </div>
-      <footer className="foot muted">© {new Date().getFullYear()} Paul Edelman · Newark, DE · Press <kbd>Ctrl K</kbd> to search</footer>
     </section>
   );
 }

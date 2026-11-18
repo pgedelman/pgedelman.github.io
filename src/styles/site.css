@@ -154,7 +154,6 @@ main { max-width: 1200px; margin: 0 auto; padding: 24px; }
 .cta h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(2.2rem, 4.5vw, 3.3rem); line-height: 1.05; margin: 14px 0 10px; }
 .cta__sub { color: var(--muted); max-width: 56ch; }
 .cta .links { margin-top: 28px; margin-left: -8px; }
-.foot { font-size: 0.78rem; padding: 32px 0 16px; text-align: center; }
 
 /* ---------- Edge panels: solid tinted panels attached to the screen edge ---------- */
 .edge { position: relative; isolation: isolate; border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--line)); background: color-mix(in srgb, var(--accent) 17%, var(--surface)) !important; }
@@ -184,6 +183,12 @@ main { max-width: 1200px; margin: 0 auto; padding: 24px; }
 .pbar h2, .xbar h2 { font-family: var(--serif); font-weight: 400; font-size: 2.2rem; line-height: 1; white-space: nowrap; font-variation-settings: 'SOFT' 100, 'opsz' 72; }
 .pbar .skillbar { margin: 0; gap: 5px; }
 .pbar .skillbar span { background: color-mix(in srgb, var(--bg) 40%, transparent); }
+.skillfloat { position: fixed; z-index: 35; top: 76px; left: 50%; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px; max-width: min(720px, calc(100vw - 32px));
+  padding: 8px 14px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--line)); background: color-mix(in srgb, var(--accent) 14%, var(--surface));
+  transform: translate(-50%, -12px); opacity: 0; pointer-events: none; transition: opacity 0.2s, transform 0.2s; }
+.skillfloat.is-on { opacity: 1; transform: translate(-50%, 0); }
+.skillfloat b { font-family: var(--mono); font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-right: 4px; }
+.skillfloat span { font-size: 0.78rem; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--accent); color: var(--text); background: color-mix(in srgb, var(--accent) 16%, transparent); }
 
 /* experience: edge heading bar, one-column timeline, compact skills row */
 .xbar { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 18px 0 18px 28px; margin-bottom: 32px; }
@@ -217,7 +222,7 @@ main { max-width: 1200px; margin: 0 auto; padding: 24px; }
 
 /* contact: one wide diagonal band, gold to green */
 .contact { position: relative; isolation: isolate; }
-.stripes { position: absolute; z-index: -1; left: 50%; bottom: 50px; width: 100vw; height: 500px; transform: translateX(-50%); pointer-events: none;
+.stripes { position: absolute; z-index: -1; left: 50%; bottom: 0; width: 100vw; height: 500px; transform: translateX(-50%); pointer-events: none;
   -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 40%); mask-image: linear-gradient(to bottom, transparent 0, #000 40%); }
 .stripes polygon { opacity: 0.16; }
 .stripes line { stroke-width: 2px; opacity: 0.7; }
