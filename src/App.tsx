@@ -10,10 +10,10 @@ import {
 import { useActiveSection, useCountUp, useInView } from './hooks';
 
 const SECTIONS = [
-  { id: 'about', label: 'About' },
-  { id: 'projects', label: 'Projects' },
-  { id: 'experience', label: 'Experience' },
-  { id: 'contact', label: 'Contact' },
+  { id: 'about', label: 'About', accent: ACCENTS.green },
+  { id: 'projects', label: 'Projects', accent: ACCENTS.blue },
+  { id: 'experience', label: 'Experience', accent: ACCENTS.red },
+  { id: 'contact', label: 'Contact', accent: ACCENTS.gold },
 ];
 const SECTION_IDS = SECTIONS.map(s => s.id);
 const go = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
@@ -39,17 +39,17 @@ function Topbar({ onPalette, onResume }: { onPalette: () => void; onResume: () =
     <header className="top">
       <div className="top__inner">
         <button className="logo" onClick={() => go('about')} aria-label="Back to top">
-          Paul Edelman<span className="dot">.</span>
+          Paul Edelman
         </button>
         <nav className="top__nav">
           {SECTIONS.map(s => (
-            <button key={s.id} onClick={() => go(s.id)} className={active === s.id ? 'is-active' : ''}>
+            <button key={s.id} onClick={() => go(s.id)} className={active === s.id ? 'is-active' : ''} style={{ '--accent': s.accent } as React.CSSProperties}>
               {s.label}
             </button>
           ))}
         </nav>
         <div className="top__actions">
-          <Links size={18} />
+          <Links size={21} />
           <span className="top__sep" />
           <button className="kbtn" onClick={onPalette} aria-label="Open search"><span>Search</span><kbd>Ctrl K</kbd></button>
           <button className="btn btn--primary" onClick={onResume}>Resume</button>
@@ -76,7 +76,7 @@ function Bento({ onResume }: { onResume: () => void }) {
     <section id="about" className="bento" ref={ref}>
       <Tile className="b-intro">
         <span className="label">Software Engineer · Class of 2027</span>
-        <h1>Paul Edelman<span className="dot">.</span></h1>
+        <h1>Paul Edelman</h1>
         <p className="b-intro__tag">I build the layer under the framework: consensus, containers, and data pipelines.</p>
         <p className="b-intro__body">{profile.intro}</p>
         <div className="row">
@@ -84,7 +84,7 @@ function Bento({ onResume }: { onResume: () => void }) {
           <button className="btn btn--ghost" onClick={onResume}>View resume</button>
         </div>
       </Tile>
-      <Tile className="b-photo">
+      <Tile accent={ACCENTS.blue} className="b-photo">
         <img src={picture} alt={profile.name} />
         <div className="b-photo__cap">
           <span>{profile.location}</span>
@@ -92,18 +92,18 @@ function Bento({ onResume }: { onResume: () => void }) {
         </div>
       </Tile>
       {stats.map(s => <StatTile key={s.label} s={s} start={inView} />)}
-      <Tile className="b-edu">
+      <Tile accent={ACCENTS.blue} className="b-edu">
         <span className="label">Education</span>
         <strong>University of Delaware</strong>
         <span>B.S. Computer Science · B.A. Applied Mathematics</span>
         <span className="muted">Honors · 3.7 GPA · May 2027</span>
       </Tile>
-      <Tile className="b-award">
+      <Tile accent={ACCENTS.red} className="b-award">
         <span className="label">Award</span>
         <strong>2nd place, HenHacks</strong>
         <span className="muted">FootPrint, a spending-to-carbon tracker built on Plaid</span>
       </Tile>
-      <Tile className="b-now" onClick={() => window.open(projects[0].link, '_blank')} role="button" tabIndex={0}>
+      <Tile accent={ACCENTS.gold} className="b-now" onClick={() => window.open(projects[0].link, '_blank')} role="button" tabIndex={0}>
         <span className="label"><i className="live" /> Now building</span>
         <strong>Ticker</strong>
         <span className="muted">Raft consensus from scratch, in Go</span>
@@ -117,7 +117,7 @@ function Projects() {
   const allSkills = useMemo(() => Array.from(new Set(projects.flatMap(p => p.skills))).sort(), []);
   const [hl, setHl] = useState<string | null>(null);
   return (
-    <section id="projects" className="sec">
+    <section id="projects" className="sec" style={{ '--accent': ACCENTS.blue } as React.CSSProperties}>
       <div className="sec__head">
         <h2>Projects</h2>
         <p className="muted">Hover a skill to see where I used it.</p>
@@ -167,7 +167,7 @@ function Experience({ onPdf }: { onPdf: () => void }) {
     if (kbd) (listRef.current?.querySelector('.is-active') as HTMLElement | null)?.focus({ preventScroll: true });
   }, [active, kbd]);
   return (
-    <section id="experience" className="sec">
+    <section id="experience" className="sec" style={{ '--accent': ACCENTS.red } as React.CSSProperties}>
       <div className="sec__head">
         <h2>Experience</h2>
         <p className="muted">Click a role, or use ↑ ↓ to move between them.</p>
@@ -228,7 +228,7 @@ function Contact({ onResume }: { onResume: () => void }) {
           <button className="btn btn--primary" onClick={onResume}>View resume</button>
           <a className="btn btn--ghost" href={profile.links.linkedin} target="_blank" rel="noreferrer">Connect on LinkedIn ↗</a>
         </div>
-        <Links size={20} />
+        <Links size={22} />
       </Tile>
       <footer className="foot muted">© {new Date().getFullYear()} Paul Edelman · Newark, DE · Press <kbd>Ctrl K</kbd> to search</footer>
     </section>
@@ -248,7 +248,7 @@ export default function App() {
   }, []);
 
   const commands: Command[] = useMemo(() => [
-    ...SECTIONS.map(s => ({ id: s.id, label: s.label, hint: 'section', accent: ACCENTS.green, run: () => go(s.id) })),
+    ...SECTIONS.map(s => ({ id: s.id, label: s.label, hint: 'section', accent: s.accent, run: () => go(s.id) })),
     { id: 'resume', label: 'Open resume', hint: 'PDF', accent: ACCENTS.green, run: () => setModal('resume') },
     ...projects.map(p => ({ id: p.name, label: p.name, hint: `project · ${p.blurb}`, accent: ACCENTS[p.accent], run: () => window.open(p.link, '_blank') })),
     { id: 'gh', label: 'GitHub', hint: 'link', accent: ACCENTS.blue, run: () => window.open(profile.links.github, '_blank') },
