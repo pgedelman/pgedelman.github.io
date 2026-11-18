@@ -5,7 +5,7 @@ import PdfModal from './components/PdfModal';
 import Links from './components/Links';
 import CommandPalette, { Command } from './components/CommandPalette';
 import {
-  ACCENTS, RESUME_PDF, profile, stats, projects, experiences, research, skillGroups, Stat, Project, Experience as Exp,
+  ACCENTS, RESUME_PDF, profile, stats, projects, experiences, research, skillGroups, Stat, Project,
 } from './data/content';
 import { useActiveSection, useCountUp, useInView } from './hooks';
 
@@ -113,17 +113,11 @@ function Bento({ onResume }: { onResume: () => void }) {
   );
 }
 
-const GROUPS: { name: string; blurb: string; accent: string; side: 'left' | 'right'; items: string[] }[] = [
-  { name: 'Systems', blurb: 'Consensus, containers, and the layer under the framework.', accent: ACCENTS.gold, side: 'left', items: ['Ticker', 'minictl'] },
-  { name: 'Full-stack', blurb: 'Real-time apps, from the database to the UI.', accent: ACCENTS.green, side: 'right', items: ['FootPrint', 'Collaborative Whiteboard'] },
-  { name: 'Data & ML', blurb: 'Pipelines from raw data to trained models.', accent: ACCENTS.blue, side: 'left', items: ['PredictSports', 'Block-Smash'] },
-];
-
-function ProjectCard({ p, hl, accent, onHover }: { p: Project; hl: string | null; accent: string; onHover: (p: Project | null) => void }) {
+function ProjectCard({ p, hl, onHover }: { p: Project; hl: string | null; onHover: (p: Project | null) => void }) {
   const dim = !!hl && !p.skills.includes(hl);
   return (
     <a href={p.link} target="_blank" rel="noreferrer" className={`proj ${dim ? 'is-dim' : ''} ${hl && !dim ? 'is-lit' : ''}`} onMouseEnter={() => onHover(p)} onMouseLeave={() => onHover(null)} onFocus={() => onHover(p)} onBlur={() => onHover(null)}>
-      <Tile accent={accent} className="proj__tile">
+      <Tile accent={ACCENTS[p.accent]} className="proj__tile">
         <div className="proj__row">
           <span className="proj__dot" />
           {p.award ? <span className="proj__award">{p.award}</span> : p.metric && <span className="proj__metric">{p.metric}</span>}
@@ -145,123 +139,70 @@ function Projects() {
   const [ref, inView] = useInView<HTMLElement>(0.05);
   return (
     <section id="projects" ref={ref} className={`sec reveal ${inView ? 'is-in' : ''}`} style={{ '--accent': ACCENTS.gold } as React.CSSProperties}>
-      <div className="sec__head">
+      <div className="edge edge--left pbar">
         <h2>Projects</h2>
-        <p className="muted">Grouped by what they're about. Hover a skill to see where I used it.</p>
+        <div className="skillbar">
+          {allSkills.map(s => (
+            <span
+              key={s}
+              onMouseEnter={() => setHl(s)}
+              onMouseLeave={() => setHl(null)}
+              onClick={() => setHl(h => (h === s ? null : s))}
+              className={`${hl === s ? 'is-on' : ''} ${hoverP?.skills.includes(s) ? 'is-assoc' : ''} ${hoverP && !hoverP.skills.includes(s) ? 'is-faded' : ''}`}
+            >{s}</span>
+          ))}
+        </div>
       </div>
-      <div className="skillbar skillbar--sticky">
-        <span className="skillbar__label">{hoverP ? hoverP.name : hl ? 'Filtering' : 'Skills'}</span>
-        {allSkills.map(s => (
-          <span
-            key={s}
-            onMouseEnter={() => setHl(s)}
-            onMouseLeave={() => setHl(null)}
-            onClick={() => setHl(h => (h === s ? null : s))}
-            className={`${hl === s ? 'is-on' : ''} ${hoverP?.skills.includes(s) ? 'is-assoc' : ''} ${hoverP && !hoverP.skills.includes(s) ? 'is-faded' : ''}`}
-          >{s}</span>
-        ))}
-      </div>
-      <div className="groups">
-        {GROUPS.map((g, gi) => {
-          const items = g.items.map(n => projects.find(p => p.name === n)!).filter(Boolean);
-          const hits = hl ? items.filter(p => p.skills.includes(hl)).length : items.length;
-          return (
-            <div key={g.name} className={`group group--${g.side}`} style={{ '--accent': g.accent, transitionDelay: `${gi * 120}ms` } as React.CSSProperties}>
-              <div className={`edge edge--${g.side} group__label`} style={{ '--accent': g.accent } as React.CSSProperties}>
-                <span className="label">0{gi + 1}</span>
-                <h3>{g.name}</h3>
-                <p>{g.blurb}</p>
-                <span className="group__count">{hl ? `${hits} of ${items.length} use ${hl}` : `${items.length} projects`}</span>
-              </div>
-              {items.map(p => <ProjectCard key={p.name} p={p} hl={hl} accent={g.accent} onHover={setHoverP} />)}
-            </div>
-          );
-        })}
+      <div className="pgrid">
+        {projects.map(p => <ProjectCard key={p.name} p={p} hl={hl} onHover={setHoverP} />)}
       </div>
     </section>
   );
 }
 
-const MAJOR = ['deljis', 'airgreen'];
-
-function MinorRole({ e, onPdf }: { e: Exp; onPdf: () => void }) {
-  const [open, setOpen] = useState(false);
-  return (
-    <Tile
-      accent={ACCENTS[e.accent]}
-      className={`minor ${open ? 'is-open' : ''}`}
-      role="button"
-      tabIndex={0}
-      aria-expanded={open}
-      onClick={() => setOpen(o => !o)}
-      onKeyDown={ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); setOpen(o => !o); } }}
-    >
-      <span className="label">{e.dates}</span>
-      <h4>{e.role}</h4>
-      <p className="minor__org">{e.org}</p>
-      <p className="minor__win">{e.highlight}</p>
-      <div className="minor__body">
-        <div>
-          <ul>{e.bullets.map((b, i) => <li key={i}>{b}</li>)}</ul>
-          <div className="chips">{e.skills.map(s => <span key={s}>{s}</span>)}</div>
-          {e.links && (
-            <div className="row" onClick={ev => ev.stopPropagation()}>
-              {e.links.map(l => e.pdf
-                ? <button key={l.href} className="btn btn--ghost" onClick={onPdf}>{l.label}</button>
-                : <a key={l.href} className="btn btn--ghost" href={l.href} target="_blank" rel="noreferrer">{l.label} ↗</a>)}
-            </div>
-          )}
-        </div>
-      </div>
-      <span className="minor__toggle">{open ? 'Show less' : 'Details'} <span>{open ? '−' : '+'}</span></span>
-    </Tile>
-  );
-}
+const KEY_BULLETS: Record<string, number[]> = { deljis: [0, 3], airgreen: [0, 2] };
 
 function Experience({ onPdf }: { onPdf: () => void }) {
   const [ref, inView] = useInView<HTMLElement>(0.05);
-  const major = experiences.filter(e => MAJOR.includes(e.id));
-  const minor = experiences.filter(e => !MAJOR.includes(e.id));
   return (
     <section id="experience" ref={ref} className={`sec reveal ${inView ? 'is-in' : ''}`} style={{ '--accent': ACCENTS.red } as React.CSSProperties}>
-      <div className="sec__head">
+      <div className="edge edge--right xbar">
         <h2>Experience</h2>
-        <p className="muted">Industry roles first; teaching, research and practice below.</p>
+        <span className="muted">Newest first</span>
       </div>
-      <div className="xlayout">
-        <aside className="edge edge--left xskills">
-          <div className="xskills__inner">
-            <span className="label">Toolbox</span>
-            <h3>Skills</h3>
-            {skillGroups.map(g => (
-              <div key={g.label} className="xskills__group" style={{ '--accent': ACCENTS[g.accent] } as React.CSSProperties}>
-                <h4>{g.label}</h4>
-                <div className="chips">{g.items.map(i => <span key={i}>{i}</span>)}</div>
+      <ol className="timeline">
+        {experiences.map(e => {
+          const key = KEY_BULLETS[e.id];
+          return (
+            <li key={e.id} className={`tl ${key ? 'tl--major' : 'tl--minor'}`} style={{ '--accent': ACCENTS[e.accent] } as React.CSSProperties}>
+              <span className="tl__dot" />
+              <div className="tl__head">
+                <h3><strong>{e.org}</strong> · {e.role}</h3>
+                <span className="tl__date">{e.dates}</span>
               </div>
-            ))}
-          </div>
-        </aside>
-        <div className="xmain">
-          {major.map(e => (
-            <div key={e.id} className="xrow" style={{ '--accent': ACCENTS[e.accent] } as React.CSSProperties}>
-              <div className="edge edge--right xrow__head" style={{ '--accent': ACCENTS[e.accent] } as React.CSSProperties}>
-                <div>
-                  <span className="label">{e.dates} · {e.place}</span>
-                  <h3>{e.org}</h3>
-                  <p className="xrow__role">{e.role}</p>
-                </div>
-                <p className="xrow__win">{e.highlight}</p>
-              </div>
-              <Tile accent={ACCENTS[e.accent]} className="xrow__body">
-                <ul>{e.bullets.map((b, j) => <li key={j}>{b}</li>)}</ul>
-                <div className="chips">{e.skills.map(s => <span key={s}>{s}</span>)}</div>
-              </Tile>
-            </div>
-          ))}
-          <div className="minors">
-            {minor.map(e => <MinorRole key={e.id} e={e} onPdf={onPdf} />)}
-          </div>
-        </div>
+              {key ? (
+                <>
+                  <p className="tl__win">{e.highlight}</p>
+                  <ul>{key.map(i => <li key={i}>{e.bullets[i]}</li>)}</ul>
+                </>
+              ) : (
+                <p className="tl__line">
+                  {e.highlight}
+                  {e.pdf && <button className="tl__link" onClick={onPdf}>Read abstract</button>}
+                  {e.links && !e.pdf && e.links.map(l => <a key={l.href} className="tl__link" href={l.href} target="_blank" rel="noreferrer">{l.label} ↗</a>)}
+                </p>
+              )}
+            </li>
+          );
+        })}
+      </ol>
+      <div className="sgrid">
+        {skillGroups.map(g => (
+          <Tile key={g.label} accent={ACCENTS[g.accent]} className="sgrid__tile">
+            <h4>{g.label}</h4>
+            <div className="chips">{g.items.map(i => <span key={i}>{i}</span>)}</div>
+          </Tile>
+        ))}
       </div>
     </section>
   );
