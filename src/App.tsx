@@ -3,7 +3,6 @@ import './styles/site.css';
 import picture from './images/profile.png';
 import PdfModal from './components/PdfModal';
 import Links from './components/Links';
-import SensorDemo from './components/SensorDemo';
 import CommandPalette, { Command } from './components/CommandPalette';
 import {
   ACCENTS, RESUME_PDF, profile, stats, projects, experiences, research, skillGroups, Stat,
@@ -11,16 +10,16 @@ import {
 import { useActiveSection, useCountUp, useInView } from './hooks';
 
 const SECTIONS = [
-  { id: 'about', label: 'About', accent: ACCENTS.gold },
-  { id: 'projects', label: 'Projects', accent: ACCENTS.blue },
-  { id: 'experience', label: 'Experience', accent: ACCENTS.red },
-  { id: 'contact', label: 'Contact', accent: ACCENTS.green },
+  { id: 'about', label: 'About' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'experience', label: 'Experience' },
+  { id: 'contact', label: 'Contact' },
 ];
 const SECTION_IDS = SECTIONS.map(s => s.id);
 const go = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
 
-/** Card with a cursor-following spotlight in its accent color. */
-function Tile({ accent, className = '', children, style, ...rest }: React.HTMLAttributes<HTMLDivElement> & { accent: string }) {
+/** Card with a faint cursor-following light. */
+function Tile({ accent, className = '', children, style, ...rest }: React.HTMLAttributes<HTMLDivElement> & { accent?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const onMove = (e: React.MouseEvent) => {
     const r = ref.current!.getBoundingClientRect();
@@ -28,47 +27,32 @@ function Tile({ accent, className = '', children, style, ...rest }: React.HTMLAt
     ref.current!.style.setProperty('--my', `${e.clientY - r.top}px`);
   };
   return (
-    <div ref={ref} onMouseMove={onMove} className={`tile ${className}`} style={{ '--accent': accent, ...style } as React.CSSProperties} {...rest}>
+    <div ref={ref} onMouseMove={onMove} className={`tile ${className}`} style={{ '--accent': accent ?? ACCENTS.green, ...style } as React.CSSProperties} {...rest}>
       {children}
     </div>
   );
 }
 
-function useTheme() {
-  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
-    try { return (localStorage.getItem('theme') as 'dark' | 'light') || 'dark'; } catch { return 'dark'; }
-  });
-  useEffect(() => {
-    document.documentElement.dataset.theme = theme;
-    try { localStorage.setItem('theme', theme); } catch {}
-  }, [theme]);
-  const toggle = useMemo(() => () => setTheme(t => (t === 'dark' ? 'light' : 'dark')), []);
-  return [theme, toggle] as const;
-}
-
-function Topbar({ onPalette, onResume, theme, toggleTheme }: { onPalette: () => void; onResume: () => void; theme: string; toggleTheme: () => void }) {
+function Topbar({ onPalette, onResume }: { onPalette: () => void; onResume: () => void }) {
   const active = useActiveSection(SECTION_IDS);
   return (
     <header className="top">
       <div className="top__inner">
-        <button className="logo" onClick={() => go('about')} aria-label="Top">
-          <span className="logo__mark">
-            <i style={{ background: ACCENTS.gold }} /><i style={{ background: ACCENTS.blue }} />
-            <i style={{ background: ACCENTS.red }} /><i style={{ background: ACCENTS.green }} />
-          </span>
-          <span className="logo__name">Paul Edelman</span>
+        <button className="logo" onClick={() => go('about')} aria-label="Back to top">
+          Paul Edelman<span className="dot">.</span>
         </button>
         <nav className="top__nav">
           {SECTIONS.map(s => (
-            <button key={s.id} onClick={() => go(s.id)} className={active === s.id ? 'is-active' : ''} style={{ '--accent': s.accent } as React.CSSProperties}>
+            <button key={s.id} onClick={() => go(s.id)} className={active === s.id ? 'is-active' : ''}>
               {s.label}
             </button>
           ))}
         </nav>
         <div className="top__actions">
-          <button className="kbtn" onClick={onPalette} aria-label="Open command palette"><span>Search</span><kbd>Ctrl K</kbd></button>
-          <button className="icon-btn" onClick={toggleTheme} aria-label="Toggle theme">{theme === 'dark' ? '☀' : '☾'}</button>
-          <button className="pill pill--gold" onClick={onResume}>Resume</button>
+          <Links size={18} />
+          <span className="top__sep" />
+          <button className="kbtn" onClick={onPalette} aria-label="Open search"><span>Search</span><kbd>Ctrl K</kbd></button>
+          <button className="btn btn--primary" onClick={onResume}>Resume</button>
         </div>
       </div>
     </header>
@@ -79,58 +63,51 @@ function StatTile({ s, start }: { s: Stat; start: boolean }) {
   const n = useCountUp(s.value, start);
   return (
     <Tile accent={ACCENTS[s.accent]} className="b-stat">
-      <span className="b-stat__src">{s.source}</span>
       <span className="b-stat__num">{s.prefix}{s.value < 10 ? s.value : n}<small>{s.suffix}</small></span>
       <span className="b-stat__label">{s.label}</span>
-      <span className="b-stat__bar"><span style={{ width: start ? '100%' : '0%' }} /></span>
+      <span className="b-stat__src">{s.source}</span>
     </Tile>
   );
 }
 
-function Bento({ onResume, onResearch }: { onResume: () => void; onResearch: () => void }) {
+function Bento({ onResume }: { onResume: () => void }) {
   const [ref, inView] = useInView<HTMLDivElement>(0.15);
   return (
     <section id="about" className="bento" ref={ref}>
-      <Tile accent={ACCENTS.gold} className="b-intro">
-        <span className="eyebrow"><i className="pulse" /> Software Engineer · Class of 2027</span>
-        <h1>Paul Edelman<span>.</span></h1>
-        <p className="b-intro__tag">I build the layer under the framework: <b className="u-gold">consensus</b>, <b className="u-blue">containers</b>, <b className="u-red">pipelines</b>, and <b className="u-green">sensors</b>.</p>
+      <Tile className="b-intro">
+        <span className="label">Software Engineer · Class of 2027</span>
+        <h1>Paul Edelman<span className="dot">.</span></h1>
+        <p className="b-intro__tag">I build the layer under the framework: consensus, containers, and data pipelines.</p>
         <p className="b-intro__body">{profile.intro}</p>
         <div className="row">
-          <button className="pill pill--gold" onClick={() => go('projects')}>See projects</button>
-          <button className="pill pill--ghost" onClick={onResume}>Resume ↗</button>
+          <button className="btn btn--primary" onClick={() => go('projects')}>See projects</button>
+          <button className="btn btn--ghost" onClick={onResume}>View resume</button>
         </div>
       </Tile>
-      <Tile accent={ACCENTS.blue} className="b-photo">
+      <Tile className="b-photo">
         <img src={picture} alt={profile.name} />
         <div className="b-photo__cap">
-          <span>📍 {profile.location}</span>
-          <span>{profile.school}</span>
+          <span>{profile.location}</span>
+          <span className="muted">{profile.school}</span>
         </div>
       </Tile>
       {stats.map(s => <StatTile key={s.label} s={s} start={inView} />)}
-      <Tile accent={ACCENTS.green} className="b-research" onClick={onResearch} role="button" tabIndex={0}>
-        <span className="eyebrow eyebrow--green">Published research · 1st author</span>
-        <h3>{research.title}</h3>
-        <div className="b-research__funders">
-          {research.funders.map(f => <span key={f}>{f}</span>)}
-        </div>
-        <span className="b-link">Read the abstract →</span>
+      <Tile className="b-edu">
+        <span className="label">Education</span>
+        <strong>University of Delaware</strong>
+        <span>B.S. Computer Science · B.A. Applied Mathematics</span>
+        <span className="muted">Honors · 3.7 GPA · May 2027</span>
       </Tile>
-      <Tile accent={ACCENTS.green} className="b-award">
-        <span className="b-award__medal">2</span>
-        <div>
-          <strong>2nd place</strong>
-          <span>HenHacks · FootPrint</span>
-        </div>
+      <Tile className="b-award">
+        <span className="label">Award</span>
+        <strong>2nd place, HenHacks</strong>
+        <span className="muted">FootPrint, a spending-to-carbon tracker built on Plaid</span>
       </Tile>
-      <Tile accent={ACCENTS.gold} className="b-now" onClick={() => window.open(projects[0].link, '_blank')} role="button" tabIndex={0}>
-        <span className="eyebrow">Now building</span>
+      <Tile className="b-now" onClick={() => window.open(projects[0].link, '_blank')} role="button" tabIndex={0}>
+        <span className="label"><i className="live" /> Now building</span>
         <strong>Ticker</strong>
-        <span className="muted">Raft consensus, from scratch, in Go</span>
-        <div className="raft">
-          {[0, 1, 2, 3, 4].map(i => <i key={i} style={{ animationDelay: `${i * 0.35}s` }} />)}
-        </div>
+        <span className="muted">Raft consensus from scratch, in Go</span>
+        <span className="b-now__link">View repository ↗</span>
       </Tile>
     </section>
   );
@@ -139,21 +116,11 @@ function Bento({ onResume, onResearch }: { onResume: () => void; onResearch: () 
 function Projects() {
   const allSkills = useMemo(() => Array.from(new Set(projects.flatMap(p => p.skills))).sort(), []);
   const [hl, setHl] = useState<string | null>(null);
-  const tilt = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    const el = e.currentTarget;
-    const r = el.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width - 0.5;
-    const y = (e.clientY - r.top) / r.height - 0.5;
-    el.style.transform = `perspective(900px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) translateY(-4px)`;
-    el.style.setProperty('--mx', `${e.clientX - r.left}px`);
-    el.style.setProperty('--my', `${e.clientY - r.top}px`);
-  };
-  const reset = (e: React.MouseEvent<HTMLAnchorElement>) => { e.currentTarget.style.transform = ''; };
   return (
     <section id="projects" className="sec">
       <div className="sec__head">
-        <h2><span className="u-blue">/</span> Projects</h2>
-        <p className="muted">Hover a skill to light up where I used it.</p>
+        <h2>Projects</h2>
+        <p className="muted">Hover a skill to see where I used it.</p>
       </div>
       <div className="skillbar">
         {allSkills.map(s => (
@@ -162,18 +129,20 @@ function Projects() {
       </div>
       <div className="pgrid">
         {projects.map(p => {
-          const dim = hl && !p.skills.includes(hl);
+          const dim = !!hl && !p.skills.includes(hl);
           return (
-            <a key={p.name} href={p.link} target="_blank" rel="noreferrer" className={`proj tile ${dim ? 'is-dim' : ''} ${hl && !dim ? 'is-lit' : ''}`} style={{ '--accent': ACCENTS[p.accent] } as React.CSSProperties} onMouseMove={tilt} onMouseLeave={reset}>
-              <div className="proj__row">
-                <span className="proj__dot" />
-                {p.award ? <span className="proj__award">🏆 {p.award}</span> : p.metric && <span className="proj__metric">{p.metric}</span>}
-              </div>
-              <h3>{p.name}</h3>
-              <p className="proj__blurb">{p.blurb}</p>
-              <p className="proj__desc">{p.description}</p>
-              <div className="proj__skills">{p.skills.map(s => <span key={s} className={hl === s ? 'is-on' : ''}>{s}</span>)}</div>
-              <span className="proj__cta">View repository ↗</span>
+            <a key={p.name} href={p.link} target="_blank" rel="noreferrer" className={`proj ${dim ? 'is-dim' : ''} ${hl && !dim ? 'is-lit' : ''}`}>
+              <Tile accent={ACCENTS[p.accent]} className="proj__tile">
+                <div className="proj__row">
+                  <span className="proj__dot" />
+                  {p.award ? <span className="proj__award">{p.award}</span> : p.metric && <span className="proj__metric">{p.metric}</span>}
+                </div>
+                <h3>{p.name}</h3>
+                <p className="proj__blurb">{p.blurb}</p>
+                <p className="proj__desc">{p.description}</p>
+                <div className="chips">{p.skills.map(s => <span key={s} className={hl === s ? 'is-on' : ''}>{s}</span>)}</div>
+                <span className="proj__cta">View repository ↗</span>
+              </Tile>
             </a>
           );
         })}
@@ -182,36 +151,7 @@ function Projects() {
   );
 }
 
-function ResearchDetail({ onOpen }: { onOpen: () => void }) {
-  const [preview, setPreview] = useState(false);
-  return (
-    <div className="rdetail">
-      <SensorDemo />
-      <div className="rdetail__paper">
-        <span className="eyebrow eyebrow--green">{research.venue}</span>
-        <h4>{research.title}</h4>
-        <p className="authors">
-          {research.authors.map((a, i) => (
-            <span key={a} className={i === 0 ? 'me' : ''}>{a}{i < research.authors.length - 1 ? ', ' : ''}</span>
-          ))}
-        </p>
-        <p className="muted">{research.summary}</p>
-      </div>
-      <ol className="steps">
-        {research.pipeline.map((p, i) => (
-          <li key={p.step}><b>{String(i + 1).padStart(2, '0')}</b><strong>{p.step}</strong><span>{p.detail}</span></li>
-        ))}
-      </ol>
-      <div className="row">
-        <button className="pill pill--green" onClick={onOpen}>Open abstract (full screen)</button>
-        <button className="pill pill--ghost" onClick={() => setPreview(v => !v)}>{preview ? 'Hide preview' : 'Preview inline'}</button>
-      </div>
-      {preview && <iframe className="rdetail__pdf" src={encodeURI(research.pdf)} title="Research abstract" />}
-    </div>
-  );
-}
-
-function Experience({ onResearch }: { onResearch: () => void }) {
+function Experience({ onPdf }: { onPdf: () => void }) {
   const [active, setActive] = useState('deljis');
   const [kbd, setKbd] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
@@ -229,7 +169,7 @@ function Experience({ onResearch }: { onResearch: () => void }) {
   return (
     <section id="experience" className="sec">
       <div className="sec__head">
-        <h2><span className="u-red">/</span> Experience</h2>
+        <h2>Experience</h2>
         <p className="muted">Click a role, or use ↑ ↓ to move between them.</p>
       </div>
       <div className="xp">
@@ -247,19 +187,21 @@ function Experience({ onResearch }: { onResearch: () => void }) {
               <strong>{x.org}</strong>
               <span>{x.role}</span>
               <em>{x.dates}</em>
-              {x.kind === 'research' && <b className="xp__new">Research</b>}
             </button>
           ))}
         </div>
         <Tile accent={ACCENTS[e.accent]} className="xp__panel" key={e.id} role="tabpanel">
-          <span className="eyebrow" style={{ color: ACCENTS[e.accent] }}>{e.dates} · {e.place}</span>
-          <h3>{e.role} <span style={{ color: ACCENTS[e.accent] }}>@ {e.org}</span></h3>
-          <div className="xp__win" style={{ borderColor: ACCENTS[e.accent] }}>★ {e.highlight}</div>
-          <ul>{e.bullets.map((b, i) => <li key={i} style={{ animationDelay: `${i * 60}ms` }}>{b}</li>)}</ul>
-          <div className="proj__skills">{e.skills.map(s => <span key={s}>{s}</span>)}</div>
-          {e.kind === 'research' && <ResearchDetail onOpen={onResearch} />}
-          {e.links && e.kind !== 'research' && (
-            <div className="row">{e.links.map(l => <a key={l.href} className="pill pill--ghost" href={l.href} target="_blank" rel="noreferrer">{l.label} ↗</a>)}</div>
+          <span className="label">{e.dates} · {e.place}</span>
+          <h3>{e.role}, <span className="muted">{e.org}</span></h3>
+          <p className="xp__win" style={{ '--accent': ACCENTS[e.accent] } as React.CSSProperties}>{e.highlight}</p>
+          <ul>{e.bullets.map((b, i) => <li key={i} style={{ animationDelay: `${i * 50}ms` }}>{b}</li>)}</ul>
+          <div className="chips">{e.skills.map(s => <span key={s}>{s}</span>)}</div>
+          {e.links && (
+            <div className="row">
+              {e.links.map(l => e.pdf
+                ? <button key={l.href} className="btn btn--ghost" onClick={onPdf}>{l.label}</button>
+                : <a key={l.href} className="btn btn--ghost" href={l.href} target="_blank" rel="noreferrer">{l.label} ↗</a>)}
+            </div>
           )}
         </Tile>
       </div>
@@ -267,7 +209,7 @@ function Experience({ onResearch }: { onResearch: () => void }) {
         {skillGroups.map(g => (
           <Tile key={g.label} accent={ACCENTS[g.accent]} className="sgrid__tile">
             <h4>{g.label}</h4>
-            <div>{g.items.map(i => <span key={i}>{i}</span>)}</div>
+            <div className="chips">{g.items.map(i => <span key={i}>{i}</span>)}</div>
           </Tile>
         ))}
       </div>
@@ -278,16 +220,17 @@ function Experience({ onResearch }: { onResearch: () => void }) {
 function Contact({ onResume }: { onResume: () => void }) {
   return (
     <section id="contact" className="sec">
-      <Tile accent={ACCENTS.green} className="cta">
-        <span className="eyebrow eyebrow--green"><i className="pulse pulse--green" /> Graduating May 2027</span>
-        <h2>Need someone who reads the source of the thing under the thing?</h2>
+      <Tile className="cta">
+        <span className="label"><i className="live" /> Graduating May 2027</span>
+        <h2>Looking for my next role.</h2>
+        <p className="cta__sub">I'm interested in distributed systems, infrastructure, and backend engineering. Resume and links below.</p>
         <div className="row">
-          <button className="pill pill--green" onClick={onResume}>Open resume</button>
-          <a className="pill pill--ghost" href={profile.links.linkedin} target="_blank" rel="noreferrer">LinkedIn ↗</a>
+          <button className="btn btn--primary" onClick={onResume}>View resume</button>
+          <a className="btn btn--ghost" href={profile.links.linkedin} target="_blank" rel="noreferrer">Connect on LinkedIn ↗</a>
         </div>
-        <Links />
+        <Links size={20} />
       </Tile>
-      <footer className="foot muted">© {new Date().getFullYear()} Paul Edelman · Newark, DE · press <kbd>Ctrl K</kbd> anywhere</footer>
+      <footer className="foot muted">© {new Date().getFullYear()} Paul Edelman · Newark, DE · Press <kbd>Ctrl K</kbd> to search</footer>
     </section>
   );
 }
@@ -295,7 +238,6 @@ function Contact({ onResume }: { onResume: () => void }) {
 export default function App() {
   const [modal, setModal] = useState<'resume' | 'research' | null>(null);
   const [palette, setPalette] = useState(false);
-  const [theme, toggleTheme] = useTheme();
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -306,27 +248,27 @@ export default function App() {
   }, []);
 
   const commands: Command[] = useMemo(() => [
-    ...SECTIONS.map(s => ({ id: s.id, label: s.label, hint: 'section', accent: s.accent, run: () => go(s.id) })),
-    { id: 'resume', label: 'Open resume', hint: 'PDF', accent: ACCENTS.gold, run: () => setModal('resume') },
-    { id: 'research', label: 'Read research abstract', hint: 'PDF · 1st author', accent: ACCENTS.green, run: () => setModal('research') },
+    ...SECTIONS.map(s => ({ id: s.id, label: s.label, hint: 'section', accent: ACCENTS.green, run: () => go(s.id) })),
+    { id: 'resume', label: 'Open resume', hint: 'PDF', accent: ACCENTS.green, run: () => setModal('resume') },
     ...projects.map(p => ({ id: p.name, label: p.name, hint: `project · ${p.blurb}`, accent: ACCENTS[p.accent], run: () => window.open(p.link, '_blank') })),
     { id: 'gh', label: 'GitHub', hint: 'link', accent: ACCENTS.blue, run: () => window.open(profile.links.github, '_blank') },
     { id: 'li', label: 'LinkedIn', hint: 'link', accent: ACCENTS.blue, run: () => window.open(profile.links.linkedin, '_blank') },
-    { id: 'theme', label: 'Toggle light / dark', hint: 'theme', accent: ACCENTS.gold, run: toggleTheme },
-  ], [toggleTheme]);
+    { id: 'lc', label: 'LeetCode', hint: 'link', accent: ACCENTS.gold, run: () => window.open(profile.links.leetcode, '_blank') },
+    { id: 'research', label: 'DSU research abstract', hint: 'PDF', accent: ACCENTS.green, run: () => setModal('research') },
+  ], []);
 
   return (
     <div className="app">
-      <Topbar onPalette={() => setPalette(true)} onResume={() => setModal('resume')} theme={theme} toggleTheme={toggleTheme} />
+      <Topbar onPalette={() => setPalette(true)} onResume={() => setModal('resume')} />
       <main>
-        <Bento onResume={() => setModal('resume')} onResearch={() => setModal('research')} />
+        <Bento onResume={() => setModal('resume')} />
         <Projects />
-        <Experience onResearch={() => setModal('research')} />
+        <Experience onPdf={() => setModal('research')} />
         <Contact onResume={() => setModal('resume')} />
       </main>
       <CommandPalette open={palette} onClose={() => setPalette(false)} commands={commands} />
-      <PdfModal open={modal === 'resume'} onClose={() => setModal(null)} title="Paul Edelman: Resume" subtitle="Fall 2026" src={RESUME_PDF} downloadName="Edelman Resume.pdf" accent={ACCENTS.gold} />
-      <PdfModal open={modal === 'research'} onClose={() => setModal(null)} title="Sensor Developer / Researcher @ DSU" subtitle="First author · Funded by DoD, NSF & DoE · 2022 – 2023" src={research.pdf} downloadName="Edelman - Air-quality Maps Abstract.pdf" accent={ACCENTS.green} />
+      <PdfModal open={modal === 'resume'} onClose={() => setModal(null)} title="Paul Edelman, Resume" subtitle="Fall 2026" src={RESUME_PDF} downloadName="Edelman Resume.pdf" accent={ACCENTS.green} />
+      <PdfModal open={modal === 'research'} onClose={() => setModal(null)} title={research.title} subtitle="Delaware State University · 2022 – 2023" src={research.pdf} downloadName="Edelman - Air-quality Maps Abstract.pdf" accent={ACCENTS.green} />
     </div>
   );
 }

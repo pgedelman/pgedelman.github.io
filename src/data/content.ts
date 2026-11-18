@@ -14,7 +14,7 @@ export const ABSTRACT_PDF = '/assets/Summer Symposium Abstract_PM Team_Khan.docx
 
 export const profile = {
   name: 'Paul Edelman',
-  roles: ['software engineer', 'distributed systems builder', 'published researcher', 'beach lifeguard'],
+  roles: ['software engineer', 'distributed systems builder', 'beach lifeguard'],
   tagline: 'Software Engineer · Distributed Systems · Beach Lifeguard',
   location: 'Newark, DE',
   school: 'CS + Applied Math @ University of Delaware',
@@ -23,8 +23,7 @@ export const profile = {
     "I'm a Computer Science and Applied Mathematics student at the University of Delaware, graduating May 2027. " +
     "I gravitate toward the parts of a system most people don't have to think about: consensus protocols, container " +
     'internals, the layer under the framework. Between coursework, 300+ LeetCode problems, and internships at DELJIS ' +
-    "and AirGreen, I've built everything from fault-tolerant distributed systems to real-time data pipelines. " +
-    'I started early: as a high schooler I was first author on DoD- and NSF-funded air-quality sensor research at Delaware State University.',
+    "and AirGreen, I've built everything from fault-tolerant distributed systems to real-time data pipelines.",
   links: {
     linkedin: 'https://www.linkedin.com/in/paul-edelman/',
     github: 'https://github.com/pgedelman',
@@ -52,7 +51,6 @@ export const stats: Stat[] = [
 
 /** Short brag badges, used in hero strips, tickers and the terminal. */
 export const badges: { text: string; accent: Accent }[] = [
-  { text: '1st-author research · DoD & NSF funded', accent: 'gold' },
   { text: '2nd place · HenHacks', accent: 'green' },
   { text: 'Raft consensus from scratch', accent: 'blue' },
   { text: 'Honors · 3.7 GPA', accent: 'red' },
@@ -137,23 +135,21 @@ export const experiences: Experience[] = [
   {
     id: 'dsu',
     role: 'Sensor Developer / Researcher',
-    org: 'Delaware State University · OSCAR',
+    org: 'Delaware State University',
     place: 'Dover, DE',
     dates: '2022 – 2023',
     year: 2022,
     accent: 'green',
     kind: 'research',
-    highlight: 'First author on networked air-quality sensor research, as a high school student',
+    highlight: 'Built Raspberry Pi air-quality sensors for a DoD/NSF-funded study',
     bullets: [
-      'First author of "Air-quality Maps from Networked Sensors in the Kent County Region," a Summer Symposium abstract from the Optical Science Center for Applied Research.',
-      'Configured an Alphasense OPC-N3 optical particle sensor via Raspberry Pi to output PM2.5 / PM10 air-quality readings with user-editable features.',
-      'Integrated wind speed, temperature, humidity, and GPS logging sensors through custom hardware/software interfaces on Raspberry Pi and Arduino.',
-      'Contributed to stationary and mobile field monitoring across Delaware, focused on Kent County, to map air quality in real time.',
+      'Configured an Alphasense OPC-N3 optical sensor via Raspberry Pi to output PM2.5 / PM10 air-quality readings with user-editable features.',
+      'Integrated wind, temperature, humidity, and GPS sensors with Raspberry Pi and Arduino for field monitoring across Kent County.',
+      'First author of the resulting symposium abstract, "Air-quality Maps from Networked Sensors in the Kent County Region."',
     ],
-    skills: ['Python', 'Raspberry Pi', 'Arduino', 'IoT', 'Sensors', 'Data Collection'],
+    skills: ['Python', 'Raspberry Pi', 'Arduino', 'IoT'],
     pdf: ABSTRACT_PDF,
-    funders: ['DoD · Army Research Office', 'National Science Foundation', 'DoE · NNSA', 'JPMorgan Chase'],
-    links: [{ label: 'Read the abstract', href: ABSTRACT_PDF }],
+    links: [{ label: 'Read abstract', href: ABSTRACT_PDF }],
   },
   {
     id: 'leetcode',
