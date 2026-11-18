@@ -74,7 +74,7 @@ function Bento({ onResume }: { onResume: () => void }) {
   const [ref, inView] = useInView<HTMLDivElement>(0.15);
   return (
     <section id="about" className="bento" ref={ref}>
-      <Tile className="b-intro">
+      <Tile accent={ACCENTS.green} className="b-intro edge edge--left">
         <span className="label">Software Engineer · Class of 2027</span>
         <h1>Paul Edelman</h1>
         <p className="b-intro__tag">I build the layer under the framework: consensus, containers, and data pipelines.</p>
@@ -116,17 +116,22 @@ function Bento({ onResume }: { onResume: () => void }) {
 function Projects() {
   const allSkills = useMemo(() => Array.from(new Set(projects.flatMap(p => p.skills))).sort(), []);
   const [hl, setHl] = useState<string | null>(null);
+  const [ref, inView] = useInView<HTMLElement>(0.08);
   return (
-    <section id="projects" className="sec" style={{ '--accent': ACCENTS.blue } as React.CSSProperties}>
-      <div className="sec__head">
-        <h2>Projects</h2>
-        <p className="muted">Hover a skill to see where I used it.</p>
-      </div>
-      <div className="skillbar">
-        {allSkills.map(s => (
-          <span key={s} onMouseEnter={() => setHl(s)} onMouseLeave={() => setHl(null)} onClick={() => setHl(h => (h === s ? null : s))} className={hl === s ? 'is-on' : ''}>{s}</span>
-        ))}
-      </div>
+    <section id="projects" ref={ref} className={`sec reveal ${inView ? 'is-in' : ''}`} style={{ '--accent': ACCENTS.blue } as React.CSSProperties}>
+      <div className="split">
+      <aside className="edge edge--right side">
+        <div className="side__sticky">
+          <span className="label">02 · Selected work</span>
+          <h2>Projects</h2>
+          <p className="muted">{projects.length} builds. Hover a skill to see where I used it.</p>
+          <div className="skillbar">
+            {allSkills.map(s => (
+              <span key={s} onMouseEnter={() => setHl(s)} onMouseLeave={() => setHl(null)} onClick={() => setHl(h => (h === s ? null : s))} className={hl === s ? 'is-on' : ''}>{s}</span>
+            ))}
+          </div>
+        </div>
+      </aside>
       <div className="pgrid">
         {projects.map(p => {
           const dim = !!hl && !p.skills.includes(hl);
@@ -147,6 +152,7 @@ function Projects() {
           );
         })}
       </div>
+      </div>
     </section>
   );
 }
@@ -166,12 +172,15 @@ function Experience({ onPdf }: { onPdf: () => void }) {
   useEffect(() => {
     if (kbd) (listRef.current?.querySelector('.is-active') as HTMLElement | null)?.focus({ preventScroll: true });
   }, [active, kbd]);
+  const [ref, inView] = useInView<HTMLElement>(0.08);
   return (
-    <section id="experience" className="sec" style={{ '--accent': ACCENTS.red } as React.CSSProperties}>
-      <div className="sec__head">
+    <section id="experience" ref={ref} className={`sec reveal ${inView ? 'is-in' : ''}`} style={{ '--accent': ACCENTS.red } as React.CSSProperties}>
+      <div className="edge edge--left xpbox">
+      <div className="edge__tab">
+        <span className="label">03 · Where I've worked</span>
         <h2>Experience</h2>
-        <p className="muted">Click a role, or use ↑ ↓ to move between them.</p>
       </div>
+      <p className="muted xpbox__hint">Click a role, or use ↑ ↓ to move between them.</p>
       <div className="xp">
         <div className="xp__list" role="tablist" aria-orientation="vertical" ref={listRef} onKeyDown={onKey}>
           {experiences.map(x => (
@@ -205,6 +214,7 @@ function Experience({ onPdf }: { onPdf: () => void }) {
           )}
         </Tile>
       </div>
+      </div>
       <div className="sgrid">
         {skillGroups.map(g => (
           <Tile key={g.label} accent={ACCENTS[g.accent]} className="sgrid__tile">
@@ -218,9 +228,21 @@ function Experience({ onPdf }: { onPdf: () => void }) {
 }
 
 function Contact({ onResume }: { onResume: () => void }) {
+  const [ref, inView] = useInView<HTMLElement>(0.15);
   return (
-    <section id="contact" className="sec">
-      <Tile className="cta">
+    <section id="contact" ref={ref} className={`sec contact reveal ${inView ? 'is-in' : ''}`}>
+      <svg className="stripes" viewBox="0 -160 1440 680" preserveAspectRatio="none" aria-hidden>
+        <g className="stripes__a">
+          <polygon points="0,300 1008,-120 1416,-120 0,470" />
+          <line x1="0" y1="300" x2="1008" y2="-120" vectorEffect="non-scaling-stroke" />
+          <line x1="0" y1="470" x2="1416" y2="-120" vectorEffect="non-scaling-stroke" />
+        </g>
+        <g className="stripes__b">
+          <polygon points="560,520 1440,153 1440,520" />
+          <line x1="560" y1="520" x2="1440" y2="153" vectorEffect="non-scaling-stroke" />
+        </g>
+      </svg>
+      <div className="cta">
         <span className="label"><i className="live" /> Graduating May 2027</span>
         <h2>Looking for my next role.</h2>
         <p className="cta__sub">I'm interested in distributed systems, infrastructure, and backend engineering. Resume and links below.</p>
@@ -229,7 +251,7 @@ function Contact({ onResume }: { onResume: () => void }) {
           <a className="btn btn--ghost" href={profile.links.linkedin} target="_blank" rel="noreferrer">Connect on LinkedIn ↗</a>
         </div>
         <Links size={22} />
-      </Tile>
+      </div>
       <footer className="foot muted">© {new Date().getFullYear()} Paul Edelman · Newark, DE · Press <kbd>Ctrl K</kbd> to search</footer>
     </section>
   );
