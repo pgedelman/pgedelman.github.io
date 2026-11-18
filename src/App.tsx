@@ -5,7 +5,7 @@ import PdfModal from './components/PdfModal';
 import Links from './components/Links';
 import CommandPalette, { Command } from './components/CommandPalette';
 import {
-  ACCENTS, RESUME_PDF, profile, stats, projects, experiences, research, skillGroups, Stat, Project,
+  ACCENTS, RESUME_PDF, profile, stats, projects, experiences, research, skillGroups, Stat, Project, Experience as Exp,
 } from './data/content';
 import { useActiveSection, useCountUp, useInView } from './hooks';
 
@@ -160,7 +160,35 @@ function Projects() {
   );
 }
 
-const KEY_BULLETS: Record<string, number[]> = { deljis: [0, 3], airgreen: [0, 2] };
+const MAJOR = ['deljis', 'airgreen'];
+const SHOWN = 2;
+
+function Role({ e, onPdf }: { e: Exp; onPdf: () => void }) {
+  const [open, setOpen] = useState(false);
+  const major = MAJOR.includes(e.id);
+  const extra = e.bullets.length - SHOWN;
+  const shown = open ? e.bullets : e.bullets.slice(0, SHOWN);
+  return (
+    <li className={`tl ${major ? 'tl--major' : 'tl--minor'}`} style={{ '--accent': ACCENTS[e.accent] } as React.CSSProperties}>
+      <span className="tl__dot" />
+      <div className="tl__head">
+        <h3><strong>{e.org}</strong> · {e.role}</h3>
+        <span className="tl__date">{e.dates}</span>
+      </div>
+      <p className="tl__win">
+        {e.highlight}
+        {e.pdf && <button className="tl__link" onClick={onPdf}>Read abstract</button>}
+        {e.links && !e.pdf && e.links.map(l => <a key={l.href} className="tl__link" href={l.href} target="_blank" rel="noreferrer">{l.label} ↗</a>)}
+      </p>
+      <ul>{shown.map((b, i) => <li key={i} className={i >= SHOWN ? 'is-new' : ''}>{b}</li>)}</ul>
+      {extra > 0 && (
+        <button className="tl__more" onClick={() => setOpen(o => !o)} aria-expanded={open}>
+          {open ? 'Show less' : `Show ${extra} more`} <span>{open ? '−' : '+'}</span>
+        </button>
+      )}
+    </li>
+  );
+}
 
 function Experience({ onPdf }: { onPdf: () => void }) {
   const [ref, inView] = useInView<HTMLElement>(0.05);
@@ -170,39 +198,19 @@ function Experience({ onPdf }: { onPdf: () => void }) {
         <h2>Experience</h2>
         <span className="muted">Newest first</span>
       </div>
-      <ol className="timeline">
-        {experiences.map(e => {
-          const key = KEY_BULLETS[e.id];
-          return (
-            <li key={e.id} className={`tl ${key ? 'tl--major' : 'tl--minor'}`} style={{ '--accent': ACCENTS[e.accent] } as React.CSSProperties}>
-              <span className="tl__dot" />
-              <div className="tl__head">
-                <h3><strong>{e.org}</strong> · {e.role}</h3>
-                <span className="tl__date">{e.dates}</span>
-              </div>
-              {key ? (
-                <>
-                  <p className="tl__win">{e.highlight}</p>
-                  <ul>{key.map(i => <li key={i}>{e.bullets[i]}</li>)}</ul>
-                </>
-              ) : (
-                <p className="tl__line">
-                  {e.highlight}
-                  {e.pdf && <button className="tl__link" onClick={onPdf}>Read abstract</button>}
-                  {e.links && !e.pdf && e.links.map(l => <a key={l.href} className="tl__link" href={l.href} target="_blank" rel="noreferrer">{l.label} ↗</a>)}
-                </p>
-              )}
-            </li>
-          );
-        })}
-      </ol>
-      <div className="sgrid">
-        {skillGroups.map(g => (
-          <Tile key={g.label} accent={ACCENTS[g.accent]} className="sgrid__tile">
-            <h4>{g.label}</h4>
-            <div className="chips">{g.items.map(i => <span key={i}>{i}</span>)}</div>
-          </Tile>
-        ))}
+      <div className="xgrid">
+        <ol className="timeline">
+          {experiences.map(e => <Role key={e.id} e={e} onPdf={onPdf} />)}
+        </ol>
+        <aside className="xskills">
+          <span className="label">Skills</span>
+          {skillGroups.map(g => (
+            <div key={g.label} className="xskills__group" style={{ '--accent': ACCENTS[g.accent] } as React.CSSProperties}>
+              <h4>{g.label}</h4>
+              <div className="chips">{g.items.map(i => <span key={i}>{i}</span>)}</div>
+            </div>
+          ))}
+        </aside>
       </div>
     </section>
   );
