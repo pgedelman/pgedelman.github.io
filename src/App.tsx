@@ -169,7 +169,6 @@ function Projects() {
       <div className={`skillfloat ${floatOn ? 'is-on' : ''}`} aria-hidden>
         {lastP && (
           <>
-            <b>{lastP.name}</b>
             {lastP.skills.map(s => <span key={s}>{s}</span>)}
           </>
         )}
